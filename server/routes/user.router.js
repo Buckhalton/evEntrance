@@ -3,6 +3,8 @@ const { rejectUnauthenticated } = require('../modules/authentication-middleware'
 const encryptLib = require('../modules/encryption');
 const pool = require('../modules/pool');
 const userStrategy = require('../strategies/user.strategy');
+const axios = require('axios');
+
 
 const router = express.Router();
 
@@ -31,6 +33,21 @@ router.post('/register', (req, res, next) => {
     .then(() => { res.sendStatus(201); })
     .catch((err) => { next(err); });
 });
+
+
+
+router.get('/:id', (req, res) => {
+  let id = req.params.id;
+  axios.get(`http://apilayer.net/api/validate?access_key=${process.env.NUMVERIFY_API_KEY}&number=${id}&country_code=US&format=1`)
+  .then(response => {
+    res.send(response.data);
+    console.log(response.data);
+  })
+  .catch(error => {
+    console.log('Error with phone verification:', error);
+    res.sendStatus(500);
+  })
+})
 
 // Handles login form authenticate/login POST
 // userStrategy.authenticate('local') is middleware that we run on this route

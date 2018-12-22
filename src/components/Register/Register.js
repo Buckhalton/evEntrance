@@ -19,8 +19,27 @@ class Register extends Component {
         code: Math.floor(Math.random() * 12),
     };
 
+    verifyNumber = () => {
+        this.props.dispatch({type: 'VERIFY_NUMBER', payload: 6127300750});
+        if(this.props.numberData.valid){
+            this.setState({
+                ...this.state,
+                phoneNumber: this.props.numberData.number,
+            })
+        }
+        console.log(this.props.numberData);
+    }
+
     registerUser = (event) => {
         event.preventDefault();
+        this.props.dispatch({type: 'VERIFY_NUMBER', payload: this.state.phoneNumber});
+        console.log(this.props.numberData)
+        if(this.props.numberData.valid){
+            this.setState({
+                ...this.state,
+                phoneNumber: this.props.numberData.number,
+            })
+        }
         if (this.state.firstName && this.state.lastName && this.state.email && this.state.phoneNumber && this.state.streetAddress && this.state.city && this.state.state && this.state.username && this.state.password && this.state.confirmPassword) {
             if (this.state.password === this.state.confirmPassword) {
                 this.props.dispatch({
@@ -176,6 +195,7 @@ class Register extends Component {
                         </Button>
                     </div>
                 </form>
+                <Button onClick={this.verifyNumber}>Verify</Button>
             </React.Fragment>
         )
     }
@@ -192,6 +212,7 @@ const styles = {
 
 const mapStateToProps = state => ({
     errors: state.errors,
+    numberData: state.phoneNumber,
 });
 
 export default connect(mapStateToProps)(Register);

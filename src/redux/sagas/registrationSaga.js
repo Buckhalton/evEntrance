@@ -1,4 +1,4 @@
-import { put, takeLatest } from 'redux-saga/effects';
+import { put, takeLatest, takeEvery, call } from 'redux-saga/effects';
 import axios from 'axios';
 
 // worker Saga: will be fired on "REGISTER" actions
@@ -22,8 +22,18 @@ function* registerUser(action) {
   }
 }
 
+function* verifyNumber(action) {
+  try{
+    const verifiedResponse = yield call(axios.get, `api/user/${action.payload}`);
+    yield put({type: 'SET_NUMBER', payload: verifiedResponse});
+  } catch(error) {
+    console.log(error);
+  }
+}
+
 function* registrationSaga() {
   yield takeLatest('REGISTER', registerUser);
+  yield takeEvery('VERIFY_NUMBER', verifyNumber);
 }
 
 export default registrationSaga;
