@@ -16,6 +16,7 @@ class Register extends Component {
         username: '',
         password: '',
         confirmPassword: '',
+        code: Math.floor(Math.random() * 12),
     };
 
     registerUser = (event) => {
@@ -34,6 +35,7 @@ class Register extends Component {
                         state: this.state.state,
                         username: this.state.username,
                         password: this.state.password,
+                        code: this.state.code,
                     },
                 });
             } else {
