@@ -159,12 +159,20 @@ class Register extends Component {
                     </div>
                     <div>
                         <Button
-                            color="primary"
+                            color="secondary"
                             variant="contained"
                             type="submit"
                             name="submit"
-                            value="Register">
+                            value="Register"
+                            style={styles.buttonStyles}>
                             Create Account
+                        </Button>
+                        <Button
+                            onClick={() => { this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' }) }}
+                            color="primary"
+                            variant="contained"
+                            style={styles.buttonStyles}>
+                        Already have an account?
                         </Button>
                     </div>
                 </form>
@@ -176,7 +184,10 @@ class Register extends Component {
 const styles = {
     inputStyles: {
         marginRight: '20px',
-    }
+    },
+    buttonStyles: {
+        margin: '5px',
+    },
 }
 
 const mapStateToProps = state => ({
