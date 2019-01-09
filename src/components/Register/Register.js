@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import axios from 'axios';
 
 
 class Register extends Component {
@@ -19,50 +20,62 @@ class Register extends Component {
         code: Math.floor(Math.random() * 12),
     };
 
-    verifyNumber = () => {
-        this.props.dispatch({type: 'VERIFY_NUMBER', payload: 6127300750});
-        if(this.props.numberData.valid){
-            this.setState({
-                ...this.state,
-                phoneNumber: this.props.numberData.number,
-            })
-        }
-        console.log(this.props.numberData);
-    }
-
     registerUser = (event) => {
         event.preventDefault();
-        this.props.dispatch({type: 'VERIFY_NUMBER', payload: this.state.phoneNumber});
-        console.log(this.props.numberData)
-        if(this.props.numberData.valid){
-            this.setState({
-                ...this.state,
-                phoneNumber: this.props.numberData.number,
-            })
-        }
-        if (this.state.firstName && this.state.lastName && this.state.email && this.state.phoneNumber && this.state.streetAddress && this.state.city && this.state.state && this.state.username && this.state.password && this.state.confirmPassword) {
-            if (this.state.password === this.state.confirmPassword) {
-                this.props.dispatch({
-                    type: 'REGISTER',
-                    payload: {
-                        firstName: this.state.firstName,
-                        lastName: this.state.lastName,
-                        email: this.state.email,
-                        phoneNumber: this.state.phoneNumber,
-                        streetAddress: this.state.streetAddress,
-                        city: this.state.city,
-                        state: this.state.state,
-                        username: this.state.username,
-                        password: this.state.password,
-                        code: this.state.code,
-                    },
-                });
+        // this.props.dispatch({type: 'VERIFY_NUMBER', payload: this.state.phoneNumber});
+        axios.get(`api/user/${this.state.phoneNumber}`).then(response => {
+            console.log('this is response', response)
+            if(response.data.valid) {
+                if (this.state.firstName && this.state.lastName && this.state.email && this.state.phoneNumber && this.state.streetAddress && this.state.city && this.state.state && this.state.username && this.state.password && this.state.confirmPassword) {
+                    if (this.state.password === this.state.confirmPassword) {
+                        this.props.dispatch({
+                            type: 'REGISTER',
+                            payload: {
+                                firstName: this.state.firstName,
+                                lastName: this.state.lastName,
+                                email: this.state.email,
+                                phoneNumber: this.state.phoneNumber,
+                                streetAddress: this.state.streetAddress,
+                                city: this.state.city,
+                                state: this.state.state,
+                                username: this.state.username,
+                                password: this.state.password,
+                                code: this.state.code,
+                            },
+                        });
+                    } else {
+                        this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
+                    }
+                } else {
+                    this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
+                }
             } else {
-                this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
-            }
-        } else {
-            this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
-        }
+                this.props.dispatch({type: 'REGISTRATION_PHONE_ERROR'});
+            } 
+        })
+        // if (this.state.firstName && this.state.lastName && this.state.email && this.state.phoneNumber && this.state.streetAddress && this.state.city && this.state.state && this.state.username && this.state.password && this.state.confirmPassword) {
+        //     if (this.state.password === this.state.confirmPassword) {
+        //         this.props.dispatch({
+        //             type: 'REGISTER',
+        //             payload: {
+        //                 firstName: this.state.firstName,
+        //                 lastName: this.state.lastName,
+        //                 email: this.state.email,
+        //                 phoneNumber: this.state.phoneNumber,
+        //                 streetAddress: this.state.streetAddress,
+        //                 city: this.state.city,
+        //                 state: this.state.state,
+        //                 username: this.state.username,
+        //                 password: this.state.password,
+        //                 code: this.state.code,
+        //             },
+        //         });
+        //     } else {
+        //         this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
+        //     }
+        // } else {
+        //     this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
+        // }
     } // end registerUser
 
     handleInputChangeFor = propertyName => (event) => {
@@ -178,6 +191,7 @@ class Register extends Component {
                     </div>
                     <div>
                         <Button
+                            onClick={this.registerUser}
                             color="secondary"
                             variant="contained"
                             type="submit"
@@ -191,11 +205,10 @@ class Register extends Component {
                             color="primary"
                             variant="contained"
                             style={styles.buttonStyles}>
-                        Already have an account?
+                            Already have an account?
                         </Button>
                     </div>
                 </form>
-                <Button onClick={this.verifyNumber}>Verify</Button>
             </React.Fragment>
         )
     }

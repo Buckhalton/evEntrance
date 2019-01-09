@@ -8,6 +8,13 @@ const axios = require('axios');
 
 const router = express.Router();
 
+function uuidv4() {
+  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    return v.toString(16);
+  });
+}
+
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
   // Send back user object from the session (previously queried from the database)
@@ -29,8 +36,10 @@ router.post('/register', (req, res, next) => {
   const state = req.body.state
   
   const queryText = 'INSERT INTO users (username, password, first_name, last_name, email, phone_number, street_address, city, state, authenticated, code, role_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
-  pool.query(queryText, [username, password, firstName, lastName, email, phoneNumber, streetAddress, city, state, true, 123, 1])
-    .then(() => { res.sendStatus(201); })
+  pool.query(queryText, [username, password, firstName, lastName, email, phoneNumber, streetAddress, city, state, true, uuidv4(), 1])
+    .then(response => {
+      res.sendStatus(201);
+    })
     .catch((err) => { next(err); });
 });
 
