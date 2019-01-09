@@ -41,6 +41,7 @@ const ProtectedRoute = (props) => {
     ComponentToShow = Register;
   }
 
+
   // We return a Route component that gets added to our list of routes
   return (
       <Route
