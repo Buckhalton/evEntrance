@@ -17,12 +17,11 @@ class Register extends Component {
         username: '',
         password: '',
         confirmPassword: '',
-        code: Math.floor(Math.random() * 12),
+        code: '',
     };
 
     registerUser = (event) => {
         event.preventDefault();
-        // this.props.dispatch({type: 'VERIFY_NUMBER', payload: this.state.phoneNumber});
         axios.get(`api/user/${this.state.phoneNumber}`).then(response => {
             console.log('this is response', response)
             if(response.data.valid) {
