@@ -24,8 +24,10 @@ import AdminEvents from '../AdminEvents/AdminEvents';
 import AdminAddEvents from '../AdminAddEvents/AdminAddEvents';
 import AdminEventAttendees from '../AdminEventAttendees/AdminEventAttendees';
 import AdminManageAccounts from '../AdminManageAccounts/AdminManageAccounts';
+import UserAttend from '../UserAttend/UserAttend';
 
 import './App.css';
+
 
 class App extends Component {
   componentDidMount() {
@@ -42,6 +44,14 @@ class App extends Component {
             <Redirect exact from="/" to="/home" />
             {/* Visiting localhost:3000/about will show the about page.
             This is a route anyone can see, no login necessary */}
+            {/* If the user is an admin, redirect to the admin page.*/}
+            {this.props.user.role_id === 2 && (
+              <Redirect exact from="/home" to="/admin" />
+            )}
+            {/* If the user is not an admin, redirect to the home page. */}
+            {this.props.user.role_id === 1 && (
+              <Redirect exact from="/admin" to="/home" />
+            )}
             <Route
               exact
               path="/about"
@@ -105,6 +115,12 @@ class App extends Component {
               path="/admin/accounts"
               component={AdminManageAccounts}
             />
+            <ProtectedAdminRoute
+              exact
+              path={`/admin/attend/:id`}
+              component={UserAttend}
+            />
+
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />
           </Switch>
@@ -114,5 +130,9 @@ class App extends Component {
     )
   }
 }
-
-export default connect()(App);
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  }
+}
+export default connect(mapStateToProps)(App);

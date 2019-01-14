@@ -3,7 +3,7 @@ import {Route} from 'react-router-dom'
 import {connect} from 'react-redux';
 import LoginPage from '../LoginPage/LoginPage';
 import Register from '../Register/Register';
-import UserPage from '../UserPage/UserPage';
+
 
 // A Custom Wrapper Component -- This will keep our code DRY.
 // Responsible for watching redux state, and returning an appropriate component
@@ -28,14 +28,10 @@ const ProtectedAdminRoute = (props) => {
 
   let ComponentToShow;
 
-  if(user.id && user.role_id === 1) {
-    // if the user is logged in (only logged in users have ids)
+  if(user.id && user.role_id === 2) {
+    // if the admin is logged in (admins have a role_id of 2)
     // show the component that is protected
     ComponentToShow = ComponentToProtect;
-  } else if(user.role_id === 2){
-    //if the user is not an Admin
-    //show the user home page
-    ComponentToShow = UserPage;
   } else if (loginMode === 'login') {
     // if they are not logged in, check the loginMode on Redux State
     // if the mode is 'login', show the LoginPage

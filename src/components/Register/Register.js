@@ -22,10 +22,19 @@ class Register extends Component {
 
     registerUser = (event) => {
         event.preventDefault();
-        axios.get(`api/user/${this.state.phoneNumber}`).then(response => {
+        axios.get(`api/user/num/${this.state.phoneNumber}`).then(response => {
             console.log('this is response', response)
             if(response.data.valid) {
-                if (this.state.firstName && this.state.lastName && this.state.email && this.state.phoneNumber && this.state.streetAddress && this.state.city && this.state.state && this.state.username && this.state.password && this.state.confirmPassword) {
+                if (this.state.firstName && 
+                    this.state.lastName && 
+                    this.state.email && 
+                    this.state.phoneNumber && 
+                    this.state.streetAddress && 
+                    this.state.city && 
+                    this.state.state && 
+                    this.state.username && 
+                    this.state.password && 
+                    this.state.confirmPassword) {
                     if (this.state.password === this.state.confirmPassword) {
                         this.props.dispatch({
                             type: 'REGISTER',
@@ -52,29 +61,6 @@ class Register extends Component {
                 this.props.dispatch({type: 'REGISTRATION_PHONE_ERROR'});
             } 
         })
-        // if (this.state.firstName && this.state.lastName && this.state.email && this.state.phoneNumber && this.state.streetAddress && this.state.city && this.state.state && this.state.username && this.state.password && this.state.confirmPassword) {
-        //     if (this.state.password === this.state.confirmPassword) {
-        //         this.props.dispatch({
-        //             type: 'REGISTER',
-        //             payload: {
-        //                 firstName: this.state.firstName,
-        //                 lastName: this.state.lastName,
-        //                 email: this.state.email,
-        //                 phoneNumber: this.state.phoneNumber,
-        //                 streetAddress: this.state.streetAddress,
-        //                 city: this.state.city,
-        //                 state: this.state.state,
-        //                 username: this.state.username,
-        //                 password: this.state.password,
-        //                 code: this.state.code,
-        //             },
-        //         });
-        //     } else {
-        //         this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
-        //     }
-        // } else {
-        //     this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
-        // }
     } // end registerUser
 
     handleInputChangeFor = propertyName => (event) => {
@@ -179,8 +165,8 @@ class Register extends Component {
                             style={styles.inputStyles}
                         />
                         <TextField
-                            label="Confirm Password"
-                            placeholder="Confirm Password"
+                            label="Confirm"
+                            placeholder="Confirm"
                             type="password"
                             margin="normal"
                             value={this.state.confirmPassword}

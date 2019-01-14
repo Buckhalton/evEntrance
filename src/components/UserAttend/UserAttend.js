@@ -1,18 +1,20 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import UserEventList from '../UserEventList/UserEventList';
 
-class UserPage extends Component {
+
+
+
+class UserAttend extends Component {
   componentDidMount() {
+    this.props.dispatch({type: 'USER_ATTEND', payload: {code: this.props.match.params.id}});
+    console.log(this.props.match.params.id)
   }
+
   render() {
     return (
       <div>
         <div>
-          <h1 id="welcome">
-            Welcome, {this.props.user.username}!
-            </h1>
-          <UserEventList />
+          <h1>This visitor has been marked as an attendee!</h1>
         </div>
       </div>
     )
@@ -24,4 +26,4 @@ const mapStateToProps = state => ({
 });
 
 // this allows us to use <App /> in index.js
-export default connect(mapStateToProps)(UserPage);
+export default connect(mapStateToProps)(UserAttend);

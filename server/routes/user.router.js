@@ -33,7 +33,7 @@ router.post('/register', (req, res, next) => {
   const phoneNumber = req.body.phoneNumber;
   const streetAddress = req.body.streetAddress;
   const city = req.body.city;
-  const state = req.body.state
+  const state = req.body.state;
   
   const queryText = 'INSERT INTO users (username, password, first_name, last_name, email, phone_number, street_address, city, state, authenticated, code, role_id) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12) RETURNING id';
   pool.query(queryText, [username, password, firstName, lastName, email, phoneNumber, streetAddress, city, state, true, uuidv4(), 1])
@@ -45,7 +45,7 @@ router.post('/register', (req, res, next) => {
 
 
 
-router.get('/:id', (req, res) => {
+router.get('/num/:id', (req, res) => {
   let id = req.params.id;
   axios.get(`http://apilayer.net/api/validate?access_key=${process.env.NUMVERIFY_API_KEY}&number=${id}&country_code=US&format=1`)
   .then(response => {
@@ -72,5 +72,50 @@ router.post('/logout', (req, res) => {
   req.logout();
   res.sendStatus(200);
 });
+
+//Gets user info for the UserSettings page.
+router.get('/info', rejectUnauthenticated, (req, res) => {
+  let id = req.user.id
+  pool.query('SELECT * FROM users WHERE id = $1', [id])
+  .then(response => {
+    res.send(response.rows);
+  })
+  .catch(err => {
+    res.sendStatus(500);
+    console.log(err);
+  })
+})
+
+router.put('/attend', rejectUnauthenticated, (req, res) => {
+  let code = req.body.code;
+  pool.query('UPDATE user_events SET attended = $1 FROM users WHERE users.id = user_events.users_id AND code = $2', [true, code])
+  .then(response => {
+    res.sendStatus(201)
+  })
+  .catch(err => {
+    res.sendStatus(500);
+    console.log(err);
+  })
+})
+
+router.put('/update', rejectUnauthenticated, (req, res) => {
+  let username = req.body.username;
+  let firstName = req.body.firstName;
+  let lastName = req.body.lastName;
+  let email = req.body.email;
+  let streetAddress = req.body.streetAddress;
+  let city = req.body.city;
+  let state = req.body.state;
+  let id = req.user.id;
+  let queryText = 'UPDATE users SET (username, first_name, last_name, email, street_address, city, state) = ($1, $2, $3, $4, $5, $6, $7) WHERE id = $8;';
+  pool.query(queryText, [username, firstName, lastName, email, streetAddress, city, state, id])
+  .then(response => {
+    res.sendStatus(201);
+  })
+  .catch(err => {
+    res.sendStatus(500);
+    console.log(err);
+  })
+})
 
 module.exports = router;
