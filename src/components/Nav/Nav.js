@@ -17,8 +17,22 @@ const Nav = (props) => (
         {props.user.id ? 'Home' : 'Login / Register'}
       </Link>
       {/* Show the link to the info page and the logout button if the user is logged in */}
+  
       {props.user.id && (
         <>
+        {props.user.role_id === 2 && (
+          <>
+          <Link className="nav-link" to="/admin/events">
+          Event List
+          </Link>
+          <Link className="nav-link" to="/admin/events/add">
+          Add Events
+          </Link>
+          <Link className="nav-link" to="/admin/events/attendees">
+          Manage Accounts
+          </Link>
+          </>
+        )}
         {props.user.role_id === 1 && (
           <Link className="nav-link" to="/settings">
           Account Settings
