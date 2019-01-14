@@ -106,7 +106,7 @@ class App extends Component {
 
             <ProtectedAdminRoute
               exact
-              path="/admin/events/attendees"
+              path="/admin/event/:id/attendees"
               component={AdminEventAttendees}
             />
 
