@@ -31,6 +31,8 @@ const registrationMessage = (state = '', action) => {
       return 'The entered passwords do not match. Try again!';
     case 'REGISTRATION_PHONE_ERROR':
       return 'Please enter a valid phone number.';
+    case 'USER_UPDATE_ACCOUNT_INPUT_ERROR':
+      return 'Make sure all fields are complete.';
       default:
       return state;
   }
