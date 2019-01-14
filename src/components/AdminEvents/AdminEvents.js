@@ -14,6 +14,10 @@ class AdminEvents extends Component {
         this.props.dispatch({ type: 'GET_USER_EVENT_LIST' });
     }
 
+    storeEventId = (id) => {
+        this.props.dispatch({ type: 'SET_EVENT_ID', payload: {event: id} });
+    }
+
     render() {
         let tableContentOne = this.props.eventList.map(row => {
             return (
@@ -24,6 +28,7 @@ class AdminEvents extends Component {
                     <TableCell>{row.event_name}</TableCell>
                     <TableCell>
                         <Button
+                            onClick={() => this.storeEventId(row.id)}
                             color="secondary"
                             variant="contained"
                             style={styles.buttonStyles}>

@@ -56,4 +56,51 @@ router.delete('/:id', rejectUnauthenticated, (req, res) => {
     })
 })
 
+router.get('/attendees/:id', rejectUnauthenticated, (req, res) => {
+    let id = req.params.id;
+    let queryText = `SELECT users.first_name,
+        users.id, 
+        users.last_name, 
+        users.email, 
+        users.phone_number, 
+        users.street_address, 
+        users.username, 
+        user_events.attended,
+        user_events.user_events_id,
+        events.event_name,
+        events.event_date
+        FROM user_events
+        JOIN users ON user_events.users_id = users.id 
+        JOIN events ON user_events.events_id = events.id WHERE events.id = $1;`;
+    pool.query(queryText, [id])
+    .then(response => {
+        res.send(response.rows);
+    })
+    .catch(err => {
+        res.sendStatus(500);
+        console.log(err);
+    })
+})
+
+
+
+router.put('/attendee', rejectUnauthenticated, (req, res) => {
+    console.log('In router,', req.body);
+    console.log('In router,', req.body[0].attended);
+    let body = req.body[0];
+    let userId = body.id;
+    let userEventId = body.user_events_id;
+    console.log( 'attended:', body.attended, '!attended:', !body.attended );
+    let queryText = `UPDATE user_events SET attended = $1 
+    WHERE user_events.users_id = $2 AND user_events.user_events_id = $3;`;
+    pool.query(queryText, [!body.attended, userId, userEventId])
+    .then(response => {
+        res.sendStatus(201);
+    })
+    .catch(err => {
+        res.sendStatus(500);
+        console.log(err);
+    })
+})
+
 module.exports = router;

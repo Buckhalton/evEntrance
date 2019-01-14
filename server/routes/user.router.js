@@ -8,12 +8,25 @@ const axios = require('axios');
 
 const router = express.Router();
 
+//function to create a uniqiue code for each user
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
     var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
+
+const rejectNonAdmin = (req, res, next) => {
+  // check if logged in
+  if (req.user.role_id === 2) {
+    // They were authenticated! User may do the next thing
+    // Note! They may not be Authorized to do all things
+    next();
+  } else {
+    // failure best handled on the server. do redirect here.
+    res.sendStatus(403);
+  }
+};
 
 // Handles Ajax request for user information if user is authenticated
 router.get('/', rejectUnauthenticated, (req, res) => {
@@ -86,9 +99,12 @@ router.get('/info', rejectUnauthenticated, (req, res) => {
   })
 })
 
-router.put('/attend', rejectUnauthenticated, (req, res) => {
-  let code = req.body.code;
-  pool.query('UPDATE user_events SET attended = $1 FROM users WHERE users.id = user_events.users_id AND code = $2', [true, code])
+
+
+router.get('/attend/:id/:event', rejectNonAdmin, (req, res) => {
+  let code = req.params.id;
+  let eventId = req.params.event;
+  pool.query('UPDATE user_events SET attended = $1 FROM users WHERE users.id = user_events.users_id AND code = $2 AND user_events.events_id = $3', [true, code, eventId])
   .then(response => {
     res.sendStatus(201)
   })

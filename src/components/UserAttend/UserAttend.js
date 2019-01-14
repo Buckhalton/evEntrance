@@ -7,7 +7,6 @@ import { connect } from 'react-redux';
 class UserAttend extends Component {
   componentDidMount() {
     this.props.dispatch({type: 'USER_ATTEND', payload: {code: this.props.match.params.id}});
-    console.log(this.props.match.params.id)
   }
 
   render() {

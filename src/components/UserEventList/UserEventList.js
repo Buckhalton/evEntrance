@@ -75,6 +75,9 @@ class UserEventList extends Component {
               Cancel
             </Button>
           </TableCell>
+          <TableCell>
+            <img alt="user qr code" src={`https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://10.100.100.45:5000/api/user/attend/${this.props.user.code}/${row.id}`}/>
+          </TableCell>
       </TableRow>
       )
     })
@@ -89,6 +92,7 @@ class UserEventList extends Component {
                 <TableCell>When</TableCell>
                 <TableCell>Event</TableCell>
                 <TableCell>Cancel?</TableCell>
+                <TableCell>QR Code</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

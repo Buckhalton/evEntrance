@@ -6,6 +6,8 @@ import phoneNumber from './phoneNumberReducer';
 import eventList from './eventListReducer';
 import userUpcomingEvents from './userUpcomingEventReducer';
 import userInfo from './userInfoReducer';
+import admin from './adminReducer';
+import eventId from './eventIdReducer';
 
 // rootReducer is the primary reducer for our entire project
 // It bundles up all of the other reducers so our project can use them.
@@ -21,6 +23,8 @@ const rootReducer = combineReducers({
   eventList,
   userUpcomingEvents,
   userInfo,
+  admin,
+  eventId,
 });
 
 export default rootReducer;
