@@ -33,6 +33,8 @@ const registrationMessage = (state = '', action) => {
       return 'Please enter a valid phone number.';
     case 'USER_UPDATE_ACCOUNT_INPUT_ERROR':
       return 'Make sure all fields are complete.';
+    case 'REGISTRATION_USERNAME_ERROR':
+      return 'Sorry, That username is already taken.';
       default:
       return state;
   }

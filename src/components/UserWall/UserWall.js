@@ -6,14 +6,13 @@ import { connect } from 'react-redux';
 
 class UserAttend extends Component {
   componentDidMount() {
-    this.props.dispatch({type: 'USER_ATTEND', payload: {code: this.props.match.params.id}});
   }
 
   render() {
     return (
       <div>
         <div>
-          <h1>This visitor has been marked as an attendee!</h1>
+          <h1>You should not be here!</h1>
         </div>
       </div>
     )

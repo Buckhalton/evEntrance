@@ -7,7 +7,7 @@ import axios from 'axios';
 
 class Register extends Component {
     componentDidMount() {
-        this.props.dispatch({type: 'GET_ALL_USERS'});
+        this.props.dispatch({ type: 'GET_ALL_USERS' });
     }
     state = {
         firstName: '',
@@ -27,42 +27,42 @@ class Register extends Component {
         event.preventDefault();
         axios.get(`api/user/num/${this.state.phoneNumber}`).then(response => {
             console.log('this is response', response)
-            if(response.data.valid) {
-                if (this.state.firstName && 
-                    this.state.lastName && 
-                    this.state.email && 
-                    this.state.phoneNumber && 
-                    this.state.streetAddress && 
-                    this.state.city && 
-                    this.state.state && 
-                    this.state.username && 
-                    this.state.password && 
-                    this.state.confirmPassword) {
-                    if (this.state.password === this.state.confirmPassword) {
-                        this.props.dispatch({
-                            type: 'REGISTER',
-                            payload: {
-                                firstName: this.state.firstName,
-                                lastName: this.state.lastName,
-                                email: this.state.email,
-                                phoneNumber: this.state.phoneNumber,
-                                streetAddress: this.state.streetAddress,
-                                city: this.state.city,
-                                state: this.state.state,
-                                username: this.state.username,
-                                password: this.state.password,
-                                code: this.state.code,
-                            },
-                        });
+            if (response.data.valid) {
+                    if (this.state.firstName &&
+                        this.state.lastName &&
+                        this.state.email &&
+                        this.state.phoneNumber &&
+                        this.state.streetAddress &&
+                        this.state.city &&
+                        this.state.state &&
+                        this.state.username &&
+                        this.state.password &&
+                        this.state.confirmPassword) {
+                        if (this.state.password === this.state.confirmPassword) {
+                            this.props.dispatch({
+                                type: 'REGISTER',
+                                payload: {
+                                    firstName: this.state.firstName,
+                                    lastName: this.state.lastName,
+                                    email: this.state.email,
+                                    phoneNumber: this.state.phoneNumber,
+                                    streetAddress: this.state.streetAddress,
+                                    city: this.state.city,
+                                    state: this.state.state,
+                                    username: this.state.username,
+                                    password: this.state.password,
+                                    code: this.state.code,
+                                },
+                            });
+                        } else {
+                            this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
+                        }
                     } else {
-                        this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
+                        this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
                     }
-                } else {
-                    this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
-                }
             } else {
-                this.props.dispatch({type: 'REGISTRATION_PHONE_ERROR'});
-            } 
+                this.props.dispatch({ type: 'REGISTRATION_PHONE_ERROR' });
+            }
         })
     } // end registerUser
 
@@ -214,7 +214,7 @@ const styles = {
 const mapStateToProps = state => ({
     errors: state.errors,
     numberData: state.phoneNumber,
-    user: state.user,
+    userList: state.userList,
 });
 
 export default connect(mapStateToProps)(Register);

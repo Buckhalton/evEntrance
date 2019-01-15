@@ -24,7 +24,7 @@ import AdminEvents from '../AdminEvents/AdminEvents';
 import AdminAddEvents from '../AdminAddEvents/AdminAddEvents';
 import AdminEventAttendees from '../AdminEventAttendees/AdminEventAttendees';
 import AdminManageAccounts from '../AdminManageAccounts/AdminManageAccounts';
-import UserAttend from '../UserAttend/UserAttend';
+
 
 import './App.css';
 
@@ -115,11 +115,7 @@ class App extends Component {
               path="/admin/accounts"
               component={AdminManageAccounts}
             />
-            <ProtectedAdminRoute
-              exact
-              path={`/admin/attend/:id`}
-              component={UserAttend}
-            />
+
 
             {/* If none of the other routes matched, we will show a 404. */}
             <Route render={() => <h1>404</h1>} />

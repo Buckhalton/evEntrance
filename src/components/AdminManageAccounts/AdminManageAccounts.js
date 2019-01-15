@@ -26,7 +26,9 @@ class AdminManageAccounts extends Component {
 
     deleteUser = (user) => {
         let confirmDelete = window.confirm(`Are you sure you want to delete "${user.username}"? This user's account will be gone forever!`);
-        if(confirmDelete === true){
+        if(user.id === this.props.user.id){
+            alert('You cannot delete your own account!');
+        } else if(confirmDelete === true){
             this.props.dispatch({type: 'DELETE_USER', payload: user.id});
         }
     }

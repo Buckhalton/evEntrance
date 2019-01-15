@@ -27,12 +27,7 @@ class AdminEvents extends Component {
                     </TableCell>
                     <TableCell>{row.event_name}</TableCell>
                     <TableCell>
-                        <Button
-                            onClick={() => this.storeEventId(row.id)}
-                            color="secondary"
-                            variant="contained"
-                            style={styles.buttonStyles}>
-                                <Link to={`/admin/event/${row.id}/attendees`}
+                    <Link to={`/admin/event/${row.id}/attendees`}
                                     style={{
                                         display: 'block',
                                         height: '100%',
@@ -40,9 +35,14 @@ class AdminEvents extends Component {
                                         color: 'White'
                                     }}
                                 >
-                                    View Attendees
-                                </Link>
+                        <Button
+                            onClick={() => this.storeEventId(row.id)}
+                            color="secondary"
+                            variant="contained"
+                            style={styles.buttonStyles}>
+                            View Attendees
                         </Button>
+                    </Link>
                     </TableCell>
                 </TableRow>
             )

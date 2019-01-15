@@ -51,17 +51,17 @@ class AdminEventAttendees extends Component {
         return (
             <Paper>
                 <h3>Event Attendees: {eventTitle} - {eventDate}</h3>
-                <Button variant="contained" color="primary">
-                    <Link to="/admin/events"
+                <Link to="/admin/events"
                         style={{
                             display: 'block',
                             height: '100%',
                             textDecoration: 'none',
                             color: 'white'
                         }}>
+                    <Button variant="contained" color="primary">
                         Go Back
-                    </Link>
-                </Button>
+                    </Button>
+                </Link>
                 <Table>
                     <TableHead>
                         <TableRow>
