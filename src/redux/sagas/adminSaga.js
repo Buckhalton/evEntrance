@@ -20,11 +20,49 @@ function* setAttendance(action) {
     }
 }
 
+function* addEvent(action) {
+    try {
+        yield call(axios.post, 'api/events/add', action.payload);
+        
+    } catch(err) {
+        console.log(err);
+    }
+}
 
+function* getAllUsers() {
+    try {
+        const userListResponse = yield call(axios.get, 'api/user/userList');
+        yield put({type: 'SET_ALL_USERS', payload: userListResponse.data});
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+function* changeUserRole(action) {
+    try {
+        yield call(axios.put, `api/user/changeRole`, action.payload);
+        yield put({type: 'GET_ALL_USERS'});
+    } catch(err) {
+        console.log(err);
+    }
+}
+
+function* deleteUser(action) {
+    try {
+        yield call(axios.delete, `api/user/delete/${action.payload}`);
+        yield put({type: 'GET_ALL_USERS'});
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 function* adminSaga() {
     yield takeEvery('GET_EVENT_ATTENDEES', getEventAttendees);
     yield takeEvery('SET_ATTENDANCE', setAttendance);
+    yield takeEvery('ADD_EVENT', addEvent);
+    yield takeEvery('GET_ALL_USERS', getAllUsers);
+    yield takeEvery('CHANGE_USER_ROLE', changeUserRole);
+    yield takeEvery('DELETE_USER', deleteUser);
 }
 
 export default adminSaga;

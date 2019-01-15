@@ -89,7 +89,7 @@ router.post('/logout', (req, res) => {
 //Gets user info for the UserSettings page.
 router.get('/info', rejectUnauthenticated, (req, res) => {
   let id = req.user.id
-  pool.query('SELECT * FROM users WHERE id = $1', [id])
+  pool.query('SELECT * FROM users WHERE id = $1;', [id])
   .then(response => {
     res.send(response.rows);
   })
@@ -100,11 +100,11 @@ router.get('/info', rejectUnauthenticated, (req, res) => {
 })
 
 
-
+//not RESTful, but it gets the job done. GET instead of PUT, you cannot make put requests directly from the browser.
 router.get('/attend/:id/:event', rejectNonAdmin, (req, res) => {
   let code = req.params.id;
   let eventId = req.params.event;
-  pool.query('UPDATE user_events SET attended = $1 FROM users WHERE users.id = user_events.users_id AND code = $2 AND user_events.events_id = $3', [true, code, eventId])
+  pool.query('UPDATE user_events SET attended = $1 FROM users WHERE users.id = user_events.users_id AND code = $2 AND user_events.events_id = $3;', [true, code, eventId])
   .then(response => {
     res.sendStatus(201)
   })
@@ -127,6 +127,60 @@ router.put('/update', rejectUnauthenticated, (req, res) => {
   pool.query(queryText, [username, firstName, lastName, email, streetAddress, city, state, id])
   .then(response => {
     res.sendStatus(201);
+  })
+  .catch(err => {
+    res.sendStatus(500);
+    console.log(err);
+  })
+})
+
+router.get('/userList', rejectUnauthenticated, (req, res) => {
+  let queryText = `SELECT users.id,
+    users.first_name, 
+    users.last_name, 
+    users.email, 
+    users.phone_number, 
+    users.street_address, 
+    users.username, 
+    users.role_id FROM users;`;
+  pool.query(queryText)
+  .then(response => {
+    res.send(response.rows);
+  })
+  .catch(err => {
+    res.sendStatus(500);
+    console.log(err);
+  })
+})
+
+router.put('/changeRole', rejectNonAdmin, (req, res) => {
+  let user = req.body;
+  if(user.role_id === 2){
+    pool.query('UPDATE users SET role_id = $1 WHERE id = $2;', [1, user.id])
+    .then(response => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    })
+  } else {
+    pool.query('UPDATE users SET role_id = $1 WHERE id = $2;', [2, user.id])
+    .then(response => {
+      res.sendStatus(201);
+    })
+    .catch(err => {
+      console.log(err);
+      res.sendStatus(500);
+    })
+  }
+})
+
+router.delete('/delete/:id', rejectNonAdmin, (req, res) => {
+  let id = req.params.id;
+  pool.query('DELETE FROM users WHERE id = $1;', [id])
+  .then(response => {
+    res.sendStatus(200);
   })
   .catch(err => {
     res.sendStatus(500);

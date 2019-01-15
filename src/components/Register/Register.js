@@ -6,6 +6,9 @@ import axios from 'axios';
 
 
 class Register extends Component {
+    componentDidMount() {
+        this.props.dispatch({type: 'GET_ALL_USERS'});
+    }
     state = {
         firstName: '',
         lastName: '',
@@ -211,6 +214,7 @@ const styles = {
 const mapStateToProps = state => ({
     errors: state.errors,
     numberData: state.phoneNumber,
+    user: state.user,
 });
 
 export default connect(mapStateToProps)(Register);
