@@ -103,4 +103,17 @@ router.put('/attendee', rejectUnauthenticated, (req, res) => {
     })
 })
 
+
+router.post('/add', rejectUnauthenticated, (req, res) => {
+    let event = req.body;
+    pool.query('INSERT INTO events (event_name, event_date) VALUES ($1, $2);', [event.event, event.date])
+    .then(response => {
+        res.sendStatus(201);
+    })
+    .catch(err => {
+        res.sendStatus(500);
+        console.log(err);
+    })
+})
+
 module.exports = router;

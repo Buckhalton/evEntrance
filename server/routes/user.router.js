@@ -100,7 +100,7 @@ router.get('/info', rejectUnauthenticated, (req, res) => {
 })
 
 
-
+//not RESTful, but it gets the job done. GET instead of PUT, you cannot make put requests directly from the browser.
 router.get('/attend/:id/:event', rejectNonAdmin, (req, res) => {
   let code = req.params.id;
   let eventId = req.params.event;
