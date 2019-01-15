@@ -23,7 +23,7 @@ class AdminEventAttendees extends Component {
         let tableContentOne = this.props.attendeesList.map(row => {
             return (
                 <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell>
                         {row.first_name} {row.last_name}
                     </TableCell>
                     <TableCell>{row.email}</TableCell>
