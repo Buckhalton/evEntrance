@@ -20,11 +20,20 @@ function* setAttendance(action) {
     }
 }
 
+function* addEvent(action) {
+    try {
+        yield call(axios.post, 'api/events/add', action.payload);
+        
+    } catch(err) {
+        console.log(err);
+    }
+}
 
 
 function* adminSaga() {
     yield takeEvery('GET_EVENT_ATTENDEES', getEventAttendees);
     yield takeEvery('SET_ATTENDANCE', setAttendance);
+    yield takeEvery('ADD_EVENT', addEvent);
 }
 
 export default adminSaga;
