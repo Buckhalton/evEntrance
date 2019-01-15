@@ -22,7 +22,7 @@ class AdminEvents extends Component {
         let tableContentOne = this.props.eventList.map(row => {
             return (
                 <TableRow key={row.id}>
-                    <TableCell component="th" scope="row">
+                    <TableCell>
                         {row.event_date}
                     </TableCell>
                     <TableCell>{row.event_name}</TableCell>
