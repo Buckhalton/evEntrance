@@ -3,6 +3,8 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
+import { withStyles } from '@material-ui/core';
+
 
 
 class AdminAddEvents extends Component {
@@ -25,8 +27,9 @@ class AdminAddEvents extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
-            <Paper>
+            <Paper className={classes.paper}>
                 <h1>Add Events</h1>
                 <div>
                     <TextField
@@ -37,7 +40,7 @@ class AdminAddEvents extends Component {
                         margin="normal"
                         value={this.state.eventName}
                         onChange={this.handleInputChangeFor('eventName')}
-                        style={styles.inputStyles}
+                        className={classes.inputStyles}
                     />
                     <TextField
                         label=""
@@ -46,7 +49,7 @@ class AdminAddEvents extends Component {
                         margin="normal"
                         value={this.state.eventDate}
                         onChange={this.handleInputChangeFor('eventDate')}
-                        style={styles.inputStyles}
+                        className={classes.inputStyles}
                         variant="outlined"
                     />
                 </div>
@@ -69,13 +72,41 @@ class AdminAddEvents extends Component {
     }
 }
 
-const styles = {
+const styles = theme => ({
     inputStyles: {
         marginRight: '20px',
+        backgroundColor: '#fff2e2',
     },
     buttonStyles: {
         margin: '5px',
     },
-}
+    table: {
+        display: 'block',
+        tableLayout: 'wrap',
+        width: '100px',
+    },
+    tableRow: {
+        display: 'flex',
+    },
+    tableBody: {
+        maxHeight: '500px',
+        overflow: 'auto',
+        display: 'block',
+        wordWrap: 'break-word',
+    },
+    paper: {
+        width: '100%',
+        height: '30%',
+        marginTop: theme.spacing.unit * 3,
+        overflow: 'auto',
+        margin: '0 auto',
+        backgroundColor: '#00ACB0',
+        padding: '5%',
+        
+      },
+      header: {
+        textAlign: 'center',
+    },
+});
 
-export default connect()(AdminAddEvents);
+export default connect()(withStyles(styles)(AdminAddEvents));

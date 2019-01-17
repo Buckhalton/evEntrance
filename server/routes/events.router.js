@@ -5,7 +5,7 @@ const router = express.Router();
 
 
 router.get('/getUserEvents', rejectUnauthenticated, (req, res) => {
-    pool.query('SELECT * FROM events')
+    pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events WHERE event_date >= now();`)
     .then(response => {
         res.send(response.rows)
     })
@@ -16,9 +16,9 @@ router.get('/getUserEvents', rejectUnauthenticated, (req, res) => {
 });
 
 router.get('/getUpcomingEvents', rejectUnauthenticated, (req, res) => {
-    let queryText = `SELECT user_events.user_events_id, events.id, events.event_date, events.event_name FROM events 
-    JOIN user_events ON events.id = user_events.events_id
-    JOIN users ON users.id = user_events.users_id WHERE users.id = $1 ORDER BY user_events.user_events_id ASC;`;
+    let queryText = `SELECT "user_events"."user_events_id", "events"."id", to_char("events"."event_date", 'MM-DD-YYYY') as "event_date", "events"."event_name" FROM "events" 
+    JOIN "user_events" ON "events"."id" = "user_events"."events_id"
+    JOIN "users" ON "users"."id" = "user_events"."users_id" WHERE "users"."id" = $1 AND "event_date" >= now() ORDER BY "user_events"."user_events_id" ASC;`;
     pool.query(queryText, [req.user.id])
     .then(response => {
         res.send(response.rows)
@@ -68,10 +68,10 @@ router.get('/attendees/:id', rejectUnauthenticated, (req, res) => {
         user_events.attended,
         user_events.user_events_id,
         events.event_name,
-        events.event_date
+        to_char("events"."event_date", 'MM-DD-YYYY') as event_date
         FROM user_events
         JOIN users ON user_events.users_id = users.id 
-        JOIN events ON user_events.events_id = events.id WHERE events.id = $1;`;
+        JOIN events ON user_events.events_id = events.id WHERE events.id = $1 ORDER by id ASC;`;
     pool.query(queryText, [id])
     .then(response => {
         res.send(response.rows);
@@ -86,8 +86,8 @@ router.get('/attendees/:id', rejectUnauthenticated, (req, res) => {
 
 router.put('/attendee', rejectUnauthenticated, (req, res) => {
     console.log('In router,', req.body);
-    console.log('In router,', req.body[0].attended);
-    let body = req.body[0];
+    console.log('In router,', req.body.attended);
+    let body = req.body;
     let userId = body.id;
     let userEventId = body.user_events_id;
     console.log( 'attended:', body.attended, '!attended:', !body.attended );

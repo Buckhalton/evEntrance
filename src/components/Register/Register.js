@@ -3,11 +3,11 @@ import { connect } from 'react-redux';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
+import SnackBar from '../SnackBar/SnackBar';
 
 
 class Register extends Component {
     componentDidMount() {
-        this.props.dispatch({ type: 'GET_ALL_USERS' });
     }
     state = {
         firstName: '',
@@ -21,10 +21,12 @@ class Register extends Component {
         password: '',
         confirmPassword: '',
         code: '',
+        open: false,
     };
 
     registerUser = (event) => {
         event.preventDefault();
+        if(this.state.phoneNumber){
         axios.get(`api/user/num/${this.state.phoneNumber}`).then(response => {
             console.log('this is response', response)
             if (response.data.valid) {
@@ -55,15 +57,42 @@ class Register extends Component {
                                 },
                             });
                         } else {
-                            this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' });
+                            this.props.dispatch({ type: 'REGISTRATION_PASSWORD_ERROR' })
+                                this.setState({
+                                    open: true,
+                                  })
+                                    setTimeout(() => {
+                                      this.setState({
+                                        open: false,
+                                      });
+                                    }, 6000);
                         }
                     } else {
-                        this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' });
+                        this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' })
+                        this.setState({
+                            open: true,
+                          })
+                            setTimeout(() => {
+                              this.setState({
+                                open: false,
+                              });
+                            }, 6000);
                     }
             } else {
-                this.props.dispatch({ type: 'REGISTRATION_PHONE_ERROR' });
+                this.props.dispatch({ type: 'REGISTRATION_PHONE_ERROR' })
+                this.setState({
+                    open: true,
+                  })
+                    setTimeout(() => {
+                      this.setState({
+                        open: false,
+                      });
+                    }, 6000);
             }
         })
+    } else {
+        this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' })
+    }
     } // end registerUser
 
     handleInputChangeFor = propertyName => (event) => {
@@ -76,12 +105,7 @@ class Register extends Component {
         return (
             <React.Fragment>
                 {this.props.errors.registrationMessage && (
-                    <h2
-                        className="alert"
-                        role="alert"
-                    >
-                        {this.props.errors.registrationMessage}
-                    </h2>
+                    <SnackBar state={this.state.open} registerError={this.props.errors.registrationMessage}/>
                 )}
                 <form onSubmit={this.registerUser}>
                     <h1>Create an Account</h1>

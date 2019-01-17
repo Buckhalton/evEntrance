@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { put, takeEvery, call } from 'redux-saga/effects';
+import swal from 'sweetalert';
 
 function* getEventAttendees(action) {
     try {
@@ -23,6 +24,12 @@ function* setAttendance(action) {
 function* addEvent(action) {
     try {
         yield call(axios.post, 'api/events/add', action.payload);
+        swal({
+            title: "Event Added!",
+            text: "This event has been added to the event list!",
+            icon: "success",
+            button: "Ok",
+          });
         
     } catch(err) {
         console.log(err);

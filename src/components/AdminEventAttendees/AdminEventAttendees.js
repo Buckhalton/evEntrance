@@ -8,6 +8,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
+import { withStyles } from '@material-ui/core';
 
 class AdminEventAttendees extends Component {
     componentDidMount() {
@@ -15,26 +16,29 @@ class AdminEventAttendees extends Component {
 
     }
 
-    changeAttendance = () => {
-        this.props.dispatch({ type: 'SET_ATTENDANCE', payload: this.props.attendeesList, refresh: this.props.match.params.id });
+    changeAttendance = (id, i) => {
+        console.log(this.props.attendeesList[i]);
+        this.props.dispatch({ type: 'SET_ATTENDANCE', payload: this.props.attendeesList[i], refresh: this.props.match.params.id });
     }
 
     render() {
-        let tableContentOne = this.props.attendeesList.map(row => {
+        const { classes } = this.props;
+        console.log(this.props.attendeesList);
+        let tableContentOne = this.props.attendeesList.map((row, i) => {
             return (
                 <TableRow key={row.id}>
-                    <TableCell>
+                    <TableCell className={classes.table}>
                         {row.first_name} {row.last_name}
                     </TableCell>
-                    <TableCell>{row.email}</TableCell>
-                    <TableCell>{row.phone_number}</TableCell>
-                    <TableCell>{row.street_address}</TableCell>
-                    <TableCell>{row.username}</TableCell>
-                    <TableCell>{row.attended ? 'Yes' : 'No'}
+                    <TableCell className={classes.table}>{row.email}</TableCell>
+                    <TableCell className={classes.table}>{row.phone_number}</TableCell>
+                    <TableCell className={classes.table}>{row.street_address}</TableCell>
+                    <TableCell className={classes.table}>{row.username}</TableCell>
+                    <TableCell className={classes.table}>{row.attended ? 'Yes' : 'No'}
                         <Button
                             color="secondary"
                             variant="contained"
-                            onClick={() => this.changeAttendance(row.id)}
+                            onClick={() => this.changeAttendance(row.id, i)}
                             style={styles.buttonStyles}>
                             Change
                         </Button>
@@ -49,7 +53,7 @@ class AdminEventAttendees extends Component {
             eventDate = this.props.attendeesList[0].event_date;
         }
         return (
-            <Paper>
+            <Paper className={classes.paper}>
                 <h3>Event Attendees: {eventTitle} - {eventDate}</h3>
                 <Link to="/admin/events"
                         style={{
@@ -65,12 +69,12 @@ class AdminEventAttendees extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Phone Number</TableCell>
-                            <TableCell>Address</TableCell>
-                            <TableCell>Username</TableCell>
-                            <TableCell>Attended</TableCell>
+                            <TableCell className={classes.tableHeader}>Name</TableCell>
+                            <TableCell className={classes.tableHeader}>Email</TableCell>
+                            <TableCell className={classes.tableHeader}>Phone Number</TableCell>
+                            <TableCell className={classes.tableHeader}>Address</TableCell>
+                            <TableCell className={classes.tableHeader}>Username</TableCell>
+                            <TableCell className={classes.tableHeader}>Attended</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -82,18 +86,44 @@ class AdminEventAttendees extends Component {
     }
 }
 
-const styles = {
+const styles = theme => ({
     inputStyles: {
-        marginRight: '20px',
+      marginRight: '20px',
+      backgroundColor: '#fff2e2',
     },
     buttonStyles: {
-        margin: '5px',
+      margin: '5px',
     },
-}
+    table: {
+      fontSize: '16px',
+    },
+    tableHeader: {
+      fontSize: '32px',
+    },
+    paper: {
+      width: '85%',
+      height: '30%',
+      padding: '25px',
+      marginTop: theme.spacing.unit * 3,
+      overflow: 'auto',
+      margin: '0 auto',
+      marginBottom: '10%',
+      // backgroundColor: '#9fcfa5',
+      backgroundColor: '#00ACB0',
+      fontSize: '28px'
+  
+    },
+  
+    header: {
+      margin: '0 auto',
+      marginTop: '20px',
+      width: '85%'
+    }
+  });
 
 const mapStateToProps = state => ({
     attendeesList: state.admin,
     eventId: state.eventId,
 });
 
-export default connect(mapStateToProps)(AdminEventAttendees);
+export default connect(mapStateToProps)(withStyles(styles)(AdminEventAttendees));
