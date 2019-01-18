@@ -5,6 +5,7 @@ import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 import SnackBar from '../SnackBar/SnackBar';
+import swal from 'sweetalert';
 
 
 class UpdateAccount extends Component {
@@ -40,8 +41,18 @@ class UpdateAccount extends Component {
     }
 
     updateAccount = () => {
-        if (window.confirm('Are you sure you want to make these changes?')) {
-            if (this.state.firstName &&
+        swal({
+            title: "Are you sure you want to make these changes?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+          })
+          .then((willDelete) => {
+            if (willDelete) {
+              swal("Your user information has been updated!", {
+                icon: "success",
+              });
+              if (this.state.firstName &&
                 this.state.lastName &&
                 this.state.email &&
                 this.state.streetAddress &&
@@ -65,8 +76,11 @@ class UpdateAccount extends Component {
                     return;
                 }
             } else {
-                return
-        }
+              swal("Your user information has not been updated!");
+            }
+          });
+            
+
         this.props.history.push('/settings');
     }
 

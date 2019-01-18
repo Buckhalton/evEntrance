@@ -31,10 +31,23 @@ class AdminManageAccounts extends Component {
         if(user.id === this.props.user.id){
             swal('You cannot delete your own account!');
         } else {
-            confirmDelete = window.confirm(`Are you sure you want to delete "${user.username}"? This user's account will be gone forever!`);
-        }
-            if(confirmDelete === true){
-            this.props.dispatch({type: 'DELETE_USER', payload: user.id});
+            swal({
+                title: `Are you sure you want to delete "${user.username}"?`,
+                text: "This user's account will be gone forever!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+              })
+              .then((willDelete) => {
+                if (willDelete) {
+                this.props.dispatch({type: 'DELETE_USER', payload: user.id});
+                  swal("The user has been deleted!", {
+                    icon: "success",
+                  });
+                } else {
+                  swal("The user has not been deleted!");
+                }
+              });
         }
     }
 
