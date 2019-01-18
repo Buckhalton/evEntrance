@@ -58,10 +58,11 @@ class AdminAddEvents extends Component {
                         onClick={this.addEvent}
                         color="secondary"
                         variant="contained"
-                        style={styles.buttonStyles}>
+                        className={classes.buttonStyles}>
                         Add Event
                     </Button>
                     <Button variant="contained" 
+                        className={classes.buttonStyles}
                         onClick={() => this.props.history.push('/admin/events')}
                         color="primary">
                         Go Back
