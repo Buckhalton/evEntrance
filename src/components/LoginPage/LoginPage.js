@@ -2,6 +2,12 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 import Snackbar from '../SnackBar/SnackBar';
+import TextField from '@material-ui/core/TextField';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import Button from '@material-ui/core/Button';
+
+
+
 
 class LoginPage extends Component {
   state = {
@@ -23,20 +29,20 @@ class LoginPage extends Component {
       });
     } else {
       this.props.dispatch({ type: 'LOGIN_INPUT_ERROR' });
-        this.setState({
+      this.setState({
         open: true,
       })
-        setTimeout(() => {
-          this.setState({
-            open: false,
-          });
-        }, 6000);
-      }
+      setTimeout(() => {
+        this.setState({
+          open: false,
+        });
+      }, 6000);
+    }
 
-      } // end login
-  
+  } // end login
 
-  
+
+
 
   handleInputChangeFor = propertyName => (event) => {
     this.setState({
@@ -49,48 +55,47 @@ class LoginPage extends Component {
     return (
       <div>
         {this.props.errors.loginMessage && (
-          <Snackbar state={this.state.open} error={this.props.errors.loginMessage}/>
+          <Snackbar state={this.state.open} error={this.props.errors.loginMessage} />
         )}
         <form onSubmit={this.login} className={classes.logIn}>
-          <h1>Login</h1>
-          <div>
-            <label htmlFor="username">
-              Username:
-              <input
-                className={classes.inputStyles}
-                type="text"
-                name="username"
+          <div className={classes.center}>
+            <h1>Login</h1>
+            <div>
+              <TextField
+                label="Username"
+                placeholder="Username"
+                margin="normal"
                 value={this.state.username}
                 onChange={this.handleInputChangeFor('username')}
               />
-            </label>
-          </div>
-          <div>
-            <label htmlFor="password">
-              Password:
-              <input
-                className={classes.inputStyles}
+            </div>
+            <div>
+              <TextField
+                label="Password"
+                placeholder="Password"
                 type="password"
-                name="password"
+                margin="normal"
                 value={this.state.password}
                 onChange={this.handleInputChangeFor('password')}
               />
-            </label>
-          </div>
-          <div>
-            <input
-              className="log-in"
-              type="submit"
-              name="submit"
-              value="Log In"
-            />
+            </div>
+            <div>
+              <Button
+                color="primary"
+                variant="contained"
+                type="submit"
+                name="submit"
+                className={classes.buttonStyles}>
+                Log in
+            </Button>
+            </div>
           </div>
         </form>
         <center>
           <button
             type="button"
             className="link-button"
-            onClick={() => {this.props.dispatch({type: 'SET_TO_REGISTER_MODE'})}}
+            onClick={() => { this.props.dispatch({ type: 'SET_TO_REGISTER_MODE' }) }}
           >
             Register
           </button>
@@ -102,45 +107,51 @@ class LoginPage extends Component {
 
 const styles = theme => ({
   inputStyles: {
-      marginRight: '20px',
-      backgroundColor: '#fff2e2',
+    marginRight: '20px',
+    backgroundColor: '#edf0f5',
   },
   buttonStyles: {
-      margin: '5px',
+    margin: '5px',
   },
   table: {
-      display: 'block',
-      tableLayout: 'wrap',
-      width: '100px',
+    display: 'block',
+    tableLayout: 'wrap',
+    width: '100px',
   },
   tableRow: {
-      display: 'flex',
+    display: 'flex',
   },
   tableBody: {
-      maxHeight: '500px',
-      overflow: 'auto',
-      display: 'block',
-      wordWrap: 'break-word',
+    maxHeight: '500px',
+    overflow: 'auto',
+    display: 'block',
+    wordWrap: 'break-word',
   },
   paper: {
-      width: '100%',
-      height: '30%',
-      marginTop: theme.spacing.unit * 3,
-      overflow: 'auto',
-      margin: '0 auto',
-      backgroundColor: '#9fcfa5',
-      padding: '5%',
-      
-    },
-    header: {
-      textAlign: 'center',
-    },
-    logIn: {
-      backgroundColor: '#00ACB0',
-      position: 'relative',
-      borderRadius: '20px',
-	    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-    }
+    width: '100%',
+    height: '30%',
+    marginTop: theme.spacing.unit * 3,
+    overflow: 'auto',
+    margin: '0 auto',
+    backgroundColor: '#e1e3e7',
+    padding: '5%',
+    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+
+  },
+  header: {
+    textAlign: 'center',
+  },
+  logIn: {
+    // backgroundColor: '#00ACB0',
+    backgroundColor: '#e1e3e7',
+    position: 'relative',
+    borderRadius: '20px',
+    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+  },
+  center: {
+    margin: '0 auto',
+    textAlign: 'center',
+  }
 });
 
 // Instead of taking everything from state, we just want the error messages.

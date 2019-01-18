@@ -12,18 +12,22 @@ import { withStyles } from '@material-ui/core';
 
 class AdminEvents extends Component {
     componentDidMount() {
-        this.props.dispatch({ type: 'GET_USER_EVENT_LIST' });
+        this.props.dispatch({ type: 'GET_USER_EVENT_LIST_ADMIN' });
     }
 
     storeEventId = (id) => {
         this.props.dispatch({ type: 'SET_EVENT_ID', payload: {event: id} });
     }
 
+    getStripedStyle(i) {
+        return { backgroundColor: i % 2 ? '#e1e3e7': '#f3f6fc' };
+      }
+
     render() {
         const { classes } = this.props;
-        let tableContentOne = this.props.eventList.map(row => {
+        let tableContentOne = this.props.eventList.map((row, i) => {
             return (
-                <TableRow key={row.id}>
+                <TableRow key={i} style={this.getStripedStyle(i)}>
                     <TableCell className={classes.table}>
                         {row.event_date}
                     </TableCell>
@@ -72,34 +76,49 @@ class AdminEvents extends Component {
 const styles = theme => ({
     inputStyles: {
       marginRight: '20px',
-      backgroundColor: '#fff2e2',
+      backgroundColor: 'inherit',
     },
     buttonStyles: {
       margin: '5px',
     },
     table: {
-      fontSize: '16px',
-    },
+        fontSize: '16px',
+      },
     tableHeader: {
-      fontSize: '32px',
+        fontSize: '32px',
+      },
+    tableBody: {
+      maxHeight: '500px',
+      overflow: 'auto',
+      display: 'block',
+      wordWrap: 'break-word',
     },
     paper: {
-      width: '85%',
-      height: '30%',
-      padding: '25px',
-      marginTop: theme.spacing.unit * 3,
-      overflow: 'auto',
-      margin: '0 auto',
-      marginBottom: '10%',
-      // backgroundColor: '#9fcfa5',
-      backgroundColor: '#00ACB0',
-      fontSize: '28px'
-  
-    },
-  
+        width: '85%',
+        height: '30%',
+        padding: '25px',
+        marginTop: theme.spacing.unit * 3,
+        overflow: 'auto',
+        margin: '0 auto',
+        marginBottom: '10%',
+        borderRadius: '20px',
+        backgroundColor: '#e1e3e7',
+        fontSize: '28px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    
+      },
     header: {
-        fontSize: '32px',
-        textAlign: 'center',
+      textAlign: 'center',
+    },
+    logIn: {
+      backgroundColor: '#e1e3e7',
+      position: 'relative',
+      borderRadius: '20px',
+      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    },
+    center: {
+      margin: '0 auto',
+      textAlign: 'center',
     }
   });
 

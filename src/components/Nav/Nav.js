@@ -1,61 +1,172 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import LogOutButton from '../LogOutButton/LogOutButton';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import Button from '@material-ui/core/Button';
 import './Nav.css';
+import withState from 'recompose/withState';
+import toRenderProps from 'recompose/toRenderProps';
+import { withStyles } from '@material-ui/core';
+import MenuIcon from '@material-ui/icons/Menu';
 
-const Nav = (props) => (
-  <div className="nav">
-    <Link to="/home">
-      <h2 className="nav-title">Eventrance</h2>
-    </Link>
-    <div className="nav-right">
-      <Link className="nav-link" to="/home">
-        {/* Show this link if they are logged in or not,
-        but call this link 'Home' if they are logged in,
-        and call this link 'Login / Register' if they are not */}
-        {props.user.id ? 'Home' : 'Login / Register'}
-      </Link>
-      {/* Show the link to the info page and the logout button if the user is logged in */}
-  
-      {props.user.id && (
-        <>
-        {props.user.role_id === 2 && (
-          <>
-          <Link className="nav-link" to="/admin/events">
-          Event List
-          </Link>
-          <Link className="nav-link" to="/admin/events/add">
-          Add Events
-          </Link>
-          <Link className="nav-link" to="/admin/accounts">
-          Manage Accounts
-          </Link>
-          </>
-        )}
-        {props.user.role_id === 1 && (
-          <Link className="nav-link" to="/settings">
-          Account Settings
+const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
+
+class Nav extends Component {
+  render() {
+    return (
+      <div className="nav">
+        <Link to="/home">
+          <h2 className="nav-title">Eventrance</h2>
         </Link>
-        )}
+        <div className="nav-right">
+        {this.props.user.id && (
           <Link to="/home"><LogOutButton className="nav-link"></LogOutButton></Link>
-        </>
-      )}
-      {/* Always show this link since the about page is not protected */}
-      <Link className="nav-link" to="/about">
-        About
-      </Link>
-    </div>
-  </div>
-);
+        )}
+          <WithState>
+            {({ anchorEl, updateAnchorEl }) => {
+              const open = Boolean(anchorEl);
+              const handleClose = () => {
+                updateAnchorEl(null);
+              };
+              const { classes } = this.props;
+              return (
+                <React.Fragment>
+                  <MenuIcon
+                    aria-owns={open ? 'render-props-menu' : undefined}
+                    aria-haspopup="true"
+                    className={classes.menuButton}
+                    onClick={event => {
+                      updateAnchorEl(event.currentTarget);
+                    }}
+                  >
+                    
+                  </MenuIcon>
+                  <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+                      <Link className={classes.menu} to="/home">
+                        <MenuItem className={classes.menu} onClick={handleClose}>
+                        {/* Show this link if they are logged in or not,
+                      but call this link 'Home' if they are logged in,
+                      and call this link 'Login / Register' if they are not */}
+                        {this.props.user.id ? 'Home' : 'Login / Register'}
+                        </MenuItem>
+                      </Link>
+                    {/* <MenuItem className={classes.menu} onClick={handleClose}> */}
+                    {this.props.user.id && (
+                      <div>
+                        {this.props.user.role_id === 2 && (
+                          <div>
+                            <Link className={classes.menu} to="/admin/events">
+                              <MenuItem className={classes.menu} onClick={handleClose}>
+                                Event List
+                              </MenuItem>
+                            </Link>
+                            <Link className={classes.menu} to="/admin/events/add">
+                              <MenuItem className={classes.menu} onClick={handleClose}>
+                                Add Events
+                              </MenuItem>
+                            </Link>
+                            <Link className={classes.menu} to="/admin/accounts">
+                              <MenuItem className={classes.menu} onClick={handleClose}>
+                              Manage Accounts
+                              </MenuItem>
+                          </Link>
+                          </div>
+                        )}
+                        {this.props.user.role_id === 1 && (
+                          <Link className={classes.menu} to="/settings">
+                            <MenuItem onClick={handleClose}>
+                            Account Settings
+                            </MenuItem>
+                        </Link>
+                        )}
+                      </div>
+                    )}
+                    {/* </MenuItem> */}
+                    <Link className={classes.menu} to="/about">
+                      <MenuItem className={classes.menu} onClick={handleClose}>
+                      About
+                      </MenuItem>
+                    </Link>
+                  </Menu>
+                </React.Fragment>
+              );
+            }}
+          </WithState>
+        </div>
+      </div>
+    )
+  }
+}
+
+
+const styles = theme => ({
+  inputStyles: {
+    marginRight: '20px',
+    backgroundColor: '#edf0f5',
+  },
+  buttonStyles: {
+    margin: '5px',
+  },
+  table: {
+    display: 'block',
+    tableLayout: 'wrap',
+    width: '100px',
+  },
+  tableRow: {
+    display: 'flex',
+  },
+  tableBody: {
+    maxHeight: '500px',
+    overflow: 'auto',
+    display: 'block',
+    wordWrap: 'break-word',
+  },
+  paper: {
+    width: '100%',
+    height: '30%',
+    marginTop: theme.spacing.unit * 3,
+    overflow: 'auto',
+    margin: '0 auto',
+    backgroundColor: '#e1e3e7',
+    padding: '5%',
+    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+
+  },
+  header: {
+    textAlign: 'center',
+  },
+  logIn: {
+    backgroundColor: '#e1e3e7',
+    position: 'relative',
+    borderRadius: '20px',
+    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+  },
+  center: {
+    margin: '0 auto',
+    textAlign: 'center',
+  },
+  menu: {
+    display: 'block',
+    textAlign: 'center',
+    textDecoration: 'none',
+    margin: '0 auto',
+    outline: 'none',
+  },
+  menuButton: {
+    padding: '24px 10px',
+    cursor: 'pointer',
+  },
+});
 
 // Instead of taking everything from state, we just want the user
 // object to determine if they are logged in
-// if they are logged in, we show them a few more links 
+// if they are logged in, we show them a few more links
 // if you wanted you could write this code like this:
-// const mapStateToProps = ({ user }) => ({ user });
+// const mapStateToProps = ({user}) => ({user});
 const mapStateToProps = state => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps)(Nav);
+export default connect(mapStateToProps)(withStyles(styles)(Nav));

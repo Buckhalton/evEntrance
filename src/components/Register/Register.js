@@ -4,10 +4,12 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import axios from 'axios';
 import SnackBar from '../SnackBar/SnackBar';
+import { withStyles } from '@material-ui/core';
 
 
 class Register extends Component {
     componentDidMount() {
+        this.props.dispatch({type: 'CLEAR_REGISTRATION_ERROR'})
     }
     state = {
         firstName: '',
@@ -102,12 +104,14 @@ class Register extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <React.Fragment>
                 {this.props.errors.registrationMessage && (
                     <SnackBar state={this.state.open} registerError={this.props.errors.registrationMessage}/>
                 )}
-                <form onSubmit={this.registerUser}>
+                <form onSubmit={this.registerUser} className={classes.paper}>
+                <div className={classes.center}>
                     <h1>Create an Account</h1>
                     <div>
                         <TextField
@@ -116,7 +120,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.firstName}
                             onChange={this.handleInputChangeFor('firstName')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                         <TextField
                             label="Last Name"
@@ -124,7 +128,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.lastName}
                             onChange={this.handleInputChangeFor('lastName')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                     </div>
                     <div>
@@ -134,7 +138,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.email}
                             onChange={this.handleInputChangeFor('email')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                         <TextField
                             label="Phone Number"
@@ -142,7 +146,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.phoneNumber}
                             onChange={this.handleInputChangeFor('phoneNumber')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                     </div>
                     <div>
@@ -152,7 +156,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.streetAddress}
                             onChange={this.handleInputChangeFor('streetAddress')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                         <TextField
                             label="City"
@@ -160,7 +164,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.city}
                             onChange={this.handleInputChangeFor('city')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                     </div>
                     <div>
@@ -170,7 +174,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.state}
                             onChange={this.handleInputChangeFor('state')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                         <TextField
                             label="Username"
@@ -178,7 +182,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.username}
                             onChange={this.handleInputChangeFor('username')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                     </div>
                     <div>
@@ -189,7 +193,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.password}
                             onChange={this.handleInputChangeFor('password')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                         <TextField
                             label="Confirm"
@@ -198,7 +202,7 @@ class Register extends Component {
                             margin="normal"
                             value={this.state.confirmPassword}
                             onChange={this.handleInputChangeFor('confirmPassword')}
-                            style={styles.inputStyles}
+                            className={classes.inputStyles}
                         />
                     </div>
                     <div>
@@ -209,16 +213,17 @@ class Register extends Component {
                             type="submit"
                             name="submit"
                             value="Register"
-                            style={styles.buttonStyles}>
+                            className={classes.buttonStyles}>
                             Create Account
                         </Button>
                         <Button
                             onClick={() => { this.props.dispatch({ type: 'SET_TO_LOGIN_MODE' }) }}
                             color="primary"
                             variant="contained"
-                            style={styles.buttonStyles}>
+                            className={classes.buttonStyles}>
                             Already have an account?
                         </Button>
+                        </div>
                     </div>
                 </form>
             </React.Fragment>
@@ -226,14 +231,54 @@ class Register extends Component {
     }
 }
 
-const styles = {
+const styles = theme => ({
     inputStyles: {
-        marginRight: '20px',
+      marginRight: '20px',
+      backgroundColor: 'inherit',
     },
     buttonStyles: {
-        margin: '5px',
+      margin: '5px',
     },
-}
+    table: {
+        fontSize: '16px',
+      },
+    tableHeader: {
+        fontSize: '32px',
+      },
+    tableBody: {
+      maxHeight: '500px',
+      overflow: 'auto',
+      display: 'block',
+      wordWrap: 'break-word',
+    },
+    paper: {
+        width: '60%',
+        height: '30%',
+        padding: '25px',
+        marginTop: theme.spacing.unit * 3,
+        overflow: 'auto',
+        margin: '0 auto',
+        marginBottom: '10%',
+        borderRadius: '20px',
+        backgroundColor: '#e1e3e7',
+        fontSize: '28px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    
+      },
+    header: {
+      textAlign: 'center',
+    },
+    logIn: {
+      backgroundColor: '#e1e3e7',
+      position: 'relative',
+      borderRadius: '20px',
+      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    },
+    center: {
+      textAlign: 'center',
+    }
+  });
+
 
 const mapStateToProps = state => ({
     errors: state.errors,
@@ -241,4 +286,4 @@ const mapStateToProps = state => ({
     userList: state.userList,
 });
 
-export default connect(mapStateToProps)(Register);
+export default connect(mapStateToProps)(withStyles(styles)(Register));

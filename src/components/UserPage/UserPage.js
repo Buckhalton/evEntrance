@@ -24,35 +24,49 @@ class UserPage extends Component {
 const styles = theme => ({
   inputStyles: {
     marginRight: '20px',
-    backgroundColor: '#fff2e2',
+    backgroundColor: '#edf0f5',
   },
   buttonStyles: {
     margin: '5px',
   },
   table: {
-    fontSize: '16px',
-  },
+      fontSize: '16px',
+    },
   tableHeader: {
-    fontSize: '32px',
+      fontSize: '32px',
+    },
+  tableBody: {
+    maxHeight: '500px',
+    overflow: 'auto',
+    display: 'block',
+    wordWrap: 'break-word',
   },
   paper: {
-    width: '85%',
-    height: '30%',
-    padding: '25px',
-    marginTop: theme.spacing.unit * 3,
-    overflow: 'auto',
-    margin: '0 auto',
-    marginBottom: '10%',
-    // backgroundColor: '#9fcfa5',
-    backgroundColor: '#00ACB0',
-    fontSize: '28px'
-
-  },
-
+      width: '85%',
+      height: '30%',
+      padding: '25px',
+      marginTop: theme.spacing.unit * 3,
+      overflow: 'auto',
+      margin: '0 auto',
+      marginBottom: '10%',
+      borderRadius: '20px',
+      backgroundColor: '#e1e3e7',
+      fontSize: '28px',
+      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+  
+    },
   header: {
+    textAlign: 'center',
+  },
+  logIn: {
+    backgroundColor: '#e1e3e7',
+    position: 'relative',
+    borderRadius: '20px',
+    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+  },
+  center: {
     margin: '0 auto',
-    marginTop: '20px',
-    width: '85%'
+    textAlign: 'center',
   }
 });
 

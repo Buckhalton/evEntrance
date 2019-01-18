@@ -13,13 +13,16 @@ class UserSettings extends Component {
     render() {
         const { classes } = this.props;
         return (
+            <div className={classes.header}>
+            <h1>User Settings</h1>
             <Paper className={classes.paper}>
-                <h1>User Settings</h1>
-                <h3>Your Info</h3>
-                <p><strong>Name:</strong> {this.props.user.first_name} {this.props.user.last_name}</p>
-                <p><strong>Address:</strong> {this.props.user.street_address}</p>
-                <p><strong>Phone Number:</strong> {this.props.user.phone_number}</p>
-                <p><strong>Email:</strong> {this.props.user.email}</p>
+                <div className={classes.center}>
+                    <h3>Your Info</h3>
+                    <p><strong>Name:</strong> {this.props.user.first_name} {this.props.user.last_name}</p>
+                    <p><strong>Address:</strong> {this.props.user.street_address}</p>
+                    <p><strong>Phone Number:</strong> {this.props.user.phone_number}</p>
+                    <p><strong>Email:</strong> {this.props.user.email}</p>
+                </div>
                 <div>
                     <Link to="/settings/update"
                         style={{
@@ -28,7 +31,7 @@ class UserSettings extends Component {
                             textDecoration: 'none',
                             color: 'black'
                         }}>
-                        <Button 
+                        <Button
                             color="primary"
                             variant="contained">
                             Update Account
@@ -36,43 +39,60 @@ class UserSettings extends Component {
                     </Link>
                 </div>
             </Paper>
+            </div>
         )
     }
 }
 
 const styles = theme => ({
     inputStyles: {
-      marginRight: '20px',
-      backgroundColor: '#fff2e2',
+        marginRight: '20px',
+        backgroundColor: '#edf0f5',
     },
     buttonStyles: {
-      margin: '5px',
+        margin: '5px',
     },
     table: {
-      fontSize: '16px',
+        fontSize: '16px',
     },
     tableHeader: {
-      fontSize: '32px',
+        fontSize: '32px',
+    },
+    tableBody: {
+        maxHeight: '500px',
+        overflow: 'auto',
+        display: 'block',
+        wordWrap: 'break-word',
     },
     paper: {
-      width: '85%',
-      height: '30%',
-      padding: '25px',
-      marginTop: theme.spacing.unit * 3,
-      overflow: 'auto',
-      margin: '0 auto',
-      marginBottom: '10%',
-      // backgroundColor: '#9fcfa5',
-      backgroundColor: '#00ACB0',
-      fontSize: '22px'
-  
+        width: '50%',
+        height: '30%',
+        padding: '25px',
+        marginTop: theme.spacing.unit * 3,
+        overflow: 'auto',
+        margin: '0 auto',
+        marginBottom: '10%',
+        borderRadius: '20px',
+        backgroundColor: '#e1e3e7',
+        fontSize: '28px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+
     },
-  
     header: {
-        fontSize: '32px',
+        textAlign: 'center',
+        fontSize: '18px',
+    },
+    logIn: {
+        backgroundColor: '#e1e3e7',
+        position: 'relative',
+        borderRadius: '20px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    },
+    center: {
+        margin: '0 auto',
         textAlign: 'center',
     }
-  });
+});
 
 const mapStateToProps = state => ({
     user: state.user,

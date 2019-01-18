@@ -5,7 +5,18 @@ const router = express.Router();
 
 
 router.get('/getUserEvents', rejectUnauthenticated, (req, res) => {
-    pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events WHERE event_date >= now();`)
+    pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events WHERE "event_date" >= (now() - INTERVAL '1 day') ORDER BY "events"."event_date" ASC;`)
+    .then(response => {
+        res.send(response.rows)
+    })
+    .catch(err => {
+        console.log('error in GET,', err);
+        res.sendStatus(500);
+    })
+});
+
+router.get('/getUserEventsAdmin', rejectUnauthenticated, (req, res) => {
+    pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events;`)
     .then(response => {
         res.send(response.rows)
     })
@@ -18,7 +29,7 @@ router.get('/getUserEvents', rejectUnauthenticated, (req, res) => {
 router.get('/getUpcomingEvents', rejectUnauthenticated, (req, res) => {
     let queryText = `SELECT "user_events"."user_events_id", "events"."id", to_char("events"."event_date", 'MM-DD-YYYY') as "event_date", "events"."event_name" FROM "events" 
     JOIN "user_events" ON "events"."id" = "user_events"."events_id"
-    JOIN "users" ON "users"."id" = "user_events"."users_id" WHERE "users"."id" = $1 AND "event_date" >= now() ORDER BY "user_events"."user_events_id" ASC;`;
+    JOIN "users" ON "users"."id" = "user_events"."users_id" WHERE "users"."id" = $1 AND "event_date" >= (now() - INTERVAL '1 day') ORDER BY "events"."event_date" ASC;`;
     pool.query(queryText, [req.user.id])
     .then(response => {
         res.send(response.rows)

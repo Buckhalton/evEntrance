@@ -63,6 +63,15 @@ function* deleteUser(action) {
     }
 }
 
+function* getUserEventListAdmin(){
+    try {
+      const userEventListResponse = yield call(axios.get, 'api/events/getUserEventsAdmin');
+      yield put({type: 'SET_USER_EVENT_LIST', payload: userEventListResponse.data});
+    } catch(err) {
+      console.log('error in getUserEventList saga:', err);
+    }
+  }
+
 function* adminSaga() {
     yield takeEvery('GET_EVENT_ATTENDEES', getEventAttendees);
     yield takeEvery('SET_ATTENDANCE', setAttendance);
@@ -70,6 +79,7 @@ function* adminSaga() {
     yield takeEvery('GET_ALL_USERS', getAllUsers);
     yield takeEvery('CHANGE_USER_ROLE', changeUserRole);
     yield takeEvery('DELETE_USER', deleteUser);
+    yield takeEvery('GET_USER_EVENT_LIST_ADMIN', getUserEventListAdmin)
 }
 
 export default adminSaga;

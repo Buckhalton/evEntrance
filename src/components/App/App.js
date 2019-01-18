@@ -24,10 +24,23 @@ import AdminEvents from '../AdminEvents/AdminEvents';
 import AdminAddEvents from '../AdminAddEvents/AdminAddEvents';
 import AdminEventAttendees from '../AdminEventAttendees/AdminEventAttendees';
 import AdminManageAccounts from '../AdminManageAccounts/AdminManageAccounts';
-
-
-
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+// import MuiThemeProvider from '@material-ui/core/styles';
 import './App.css';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#008183',
+    },
+    secondary: {
+      main: '#f40057',
+    },
+  },
+  typography: {
+    useNextVariants: true,
+  }
+});
 
 
 class App extends Component {
@@ -37,6 +50,7 @@ class App extends Component {
 
   render() {
     return (
+      <MuiThemeProvider theme={theme}>
       <Router>
         <div className="container">
           <Nav />
@@ -124,6 +138,7 @@ class App extends Component {
           <Footer />
         </div>
       </Router>
+      </MuiThemeProvider>
     )
   }
 }

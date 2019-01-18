@@ -74,39 +74,51 @@ class AdminAddEvents extends Component {
 
 const styles = theme => ({
     inputStyles: {
-        marginRight: '20px',
-        backgroundColor: '#fff2e2',
+      marginRight: '20px',
+      backgroundColor: 'inherit',
     },
     buttonStyles: {
-        margin: '5px',
+      margin: '5px',
     },
     table: {
-        display: 'block',
-        tableLayout: 'wrap',
-        width: '100px',
-    },
-    tableRow: {
-        display: 'flex',
-    },
+        fontSize: '16px',
+      },
+    tableHeader: {
+        fontSize: '32px',
+      },
     tableBody: {
-        maxHeight: '500px',
-        overflow: 'auto',
-        display: 'block',
-        wordWrap: 'break-word',
+      maxHeight: '500px',
+      overflow: 'auto',
+      display: 'block',
+      wordWrap: 'break-word',
     },
     paper: {
-        width: '100%',
+        width: '85%',
         height: '30%',
+        padding: '25px',
         marginTop: theme.spacing.unit * 3,
         overflow: 'auto',
         margin: '0 auto',
-        backgroundColor: '#00ACB0',
-        padding: '5%',
-        
+        marginBottom: '10%',
+        borderRadius: '20px',
+        backgroundColor: '#e1e3e7',
+        fontSize: '28px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    
       },
-      header: {
-        textAlign: 'center',
+    header: {
+      textAlign: 'center',
     },
-});
+    logIn: {
+      backgroundColor: '#e1e3e7',
+      position: 'relative',
+      borderRadius: '20px',
+      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    },
+    center: {
+      margin: '0 auto',
+      textAlign: 'center',
+    }
+  });
 
 export default connect()(withStyles(styles)(AdminAddEvents));
