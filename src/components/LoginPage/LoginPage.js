@@ -32,11 +32,11 @@ class LoginPage extends Component {
       this.setState({
         open: true,
       })
-      setTimeout(() => {
-        this.setState({
-          open: false,
-        });
-      }, 6000);
+      // setTimeout(() => {
+      //   this.setState({
+      //     open: false,
+      //   });
+      // }, 6000);
     }
 
   } // end login
@@ -142,7 +142,6 @@ const styles = theme => ({
     textAlign: 'center',
   },
   logIn: {
-    // backgroundColor: '#00ACB0',
     backgroundColor: '#e1e3e7',
     position: 'relative',
     borderRadius: '20px',

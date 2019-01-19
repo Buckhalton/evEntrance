@@ -9,6 +9,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core';
+import swal from 'sweetalert';
 
 class AdminEvents extends Component {
     componentDidMount() {
@@ -16,12 +17,32 @@ class AdminEvents extends Component {
     }
 
     storeEventId = (id) => {
-        this.props.dispatch({ type: 'SET_EVENT_ID', payload: {event: id} });
+        this.props.dispatch({ type: 'SET_EVENT_ID', payload: { event: id } });
     }
 
     getStripedStyle(i) {
-        return { backgroundColor: i % 2 ? '#e1e3e7': '#f3f6fc' };
-      }
+        return { backgroundColor: i % 2 ? '#e1e3e7' : '#f3f6fc' };
+    }
+
+    deleteEvent = (id) => {
+        swal({
+            title: "Are you sure you want to delete this event?",
+            text: "Once deleted, you will not be able to view this event or its' attendees!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+                    this.props.dispatch({ type: 'DELETE_EVENT', payload: id });
+                    swal("The event has been deleted!", {
+                        icon: "success",
+                    });
+                } else {
+                    swal("The event will not be deleted");
+                }
+            });
+    }
 
     render() {
         const { classes } = this.props;
@@ -33,22 +54,31 @@ class AdminEvents extends Component {
                     </TableCell>
                     <TableCell className={classes.table}>{row.event_name}</TableCell>
                     <TableCell>
-                    <Link to={`/admin/event/${row.id}/attendees`}
-                                    style={{
-                                        display: 'block',
-                                        height: '100%',
-                                        textDecoration: 'none',
-                                        color: 'White'
-                                    }}
-                                >
+                        <Link to={`/admin/event/${row.id}/attendees`}
+                            style={{
+                                display: 'block',
+                                height: '100%',
+                                textDecoration: 'none',
+                                color: 'White'
+                            }}
+                        >
+                            <Button
+                                onClick={() => this.storeEventId(row.id)}
+                                color="secondary"
+                                variant="contained"
+                                style={styles.buttonStyles}>
+                                View Attendees
+                        </Button>
+                        </Link>
+                    </TableCell>
+                    <TableCell>
                         <Button
-                            onClick={() => this.storeEventId(row.id)}
+                            onClick={() => this.deleteEvent(row.id)}
                             color="secondary"
                             variant="contained"
                             style={styles.buttonStyles}>
-                            View Attendees
+                            Delete Event
                         </Button>
-                    </Link>
                     </TableCell>
                 </TableRow>
             )
@@ -62,6 +92,7 @@ class AdminEvents extends Component {
                             <TableCell className={classes.tableHeader}>When</TableCell>
                             <TableCell className={classes.tableHeader}>Event</TableCell>
                             <TableCell className={classes.tableHeader}>Attendees</TableCell>
+                            <TableCell className={classes.tableHeader}>Delete</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -75,23 +106,23 @@ class AdminEvents extends Component {
 
 const styles = theme => ({
     inputStyles: {
-      marginRight: '20px',
-      backgroundColor: 'inherit',
+        marginRight: '20px',
+        backgroundColor: 'inherit',
     },
     buttonStyles: {
-      margin: '5px',
+        margin: '5px',
     },
     table: {
         fontSize: '16px',
-      },
+    },
     tableHeader: {
         fontSize: '32px',
-      },
+    },
     tableBody: {
-      maxHeight: '500px',
-      overflow: 'auto',
-      display: 'block',
-      wordWrap: 'break-word',
+        maxHeight: '500px',
+        overflow: 'auto',
+        display: 'block',
+        wordWrap: 'break-word',
     },
     paper: {
         width: '85%',
@@ -105,22 +136,22 @@ const styles = theme => ({
         backgroundColor: '#e1e3e7',
         fontSize: '28px',
         boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-    
-      },
+
+    },
     header: {
-      textAlign: 'center',
+        textAlign: 'center',
     },
     logIn: {
-      backgroundColor: '#e1e3e7',
-      position: 'relative',
-      borderRadius: '20px',
-      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+        backgroundColor: '#e1e3e7',
+        position: 'relative',
+        borderRadius: '20px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
     },
     center: {
-      margin: '0 auto',
-      textAlign: 'center',
+        margin: '0 auto',
+        textAlign: 'center',
     }
-  });
+});
 
 const mapStateToProps = state => ({
     eventList: state.eventList,

@@ -156,9 +156,9 @@ const styles = theme => ({
       marginTop: theme.spacing.unit * 3,
       overflow: 'auto',
       margin: '0 auto',
-      marginBottom: '10%',
       borderRadius: '20px',
       backgroundColor: '#e1e3e7',
+      marginBottom: '10%',
       fontSize: '28px',
       boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
   
@@ -175,7 +175,8 @@ const styles = theme => ({
   center: {
     margin: '0 auto',
     textAlign: 'center',
-  }
+  },
+
 });
 
 const mapStateToProps = state => ({

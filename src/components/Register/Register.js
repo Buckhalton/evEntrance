@@ -63,33 +63,33 @@ class Register extends Component {
                                 this.setState({
                                     open: true,
                                   })
-                                    setTimeout(() => {
-                                      this.setState({
-                                        open: false,
-                                      });
-                                    }, 6000);
+                                    // setTimeout(() => {
+                                    //   this.setState({
+                                    //     open: false,
+                                    //   });
+                                    // }, 6000);
                         }
                     } else {
                         this.props.dispatch({ type: 'REGISTRATION_INPUT_ERROR' })
                         this.setState({
                             open: true,
                           })
-                            setTimeout(() => {
-                              this.setState({
-                                open: false,
-                              });
-                            }, 6000);
+                            // setTimeout(() => {
+                            //   this.setState({
+                            //     open: false,
+                            //   });
+                            // }, 6000);
                     }
             } else {
                 this.props.dispatch({ type: 'REGISTRATION_PHONE_ERROR' })
                 this.setState({
                     open: true,
                   })
-                    setTimeout(() => {
-                      this.setState({
-                        open: false,
-                      });
-                    }, 6000);
+                    // setTimeout(() => {
+                    //   this.setState({
+                    //     open: false,
+                    //   });
+                    // }, 6000);
             }
         })
     } else {

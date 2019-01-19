@@ -15,15 +15,16 @@ const WithState = toRenderProps(withState('anchorEl', 'updateAnchorEl', null));
 
 class Nav extends Component {
   render() {
+    const { classes } = this.props;
     return (
       <div className="nav">
         <Link to="/home">
-          <h2 className="nav-title">Eventrance</h2>
+          <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span></h2>
         </Link>
         <div className="nav-right">
-        {this.props.user.id && (
-          <Link to="/home"><LogOutButton className="nav-link"></LogOutButton></Link>
-        )}
+          {this.props.user.id && (
+            <Link to="/home"><LogOutButton className={classes.navRight}></LogOutButton></Link>
+          )}
           <WithState>
             {({ anchorEl, updateAnchorEl }) => {
               const open = Boolean(anchorEl);
@@ -32,7 +33,7 @@ class Nav extends Component {
               };
               const { classes } = this.props;
               return (
-                <React.Fragment>
+                <React.Fragment className={classes.menu}>
                   <MenuIcon
                     aria-owns={open ? 'render-props-menu' : undefined}
                     aria-haspopup="true"
@@ -41,17 +42,17 @@ class Nav extends Component {
                       updateAnchorEl(event.currentTarget);
                     }}
                   >
-                    
+
                   </MenuIcon>
                   <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-                      <Link className={classes.menu} to="/home">
-                        <MenuItem className={classes.menu} onClick={handleClose}>
+                    <Link className={classes.menu} to="/home">
+                      <MenuItem className={classes.menu} onClick={handleClose}>
                         {/* Show this link if they are logged in or not,
                       but call this link 'Home' if they are logged in,
                       and call this link 'Login / Register' if they are not */}
                         {this.props.user.id ? 'Home' : 'Login / Register'}
-                        </MenuItem>
-                      </Link>
+                      </MenuItem>
+                    </Link>
                     {/* <MenuItem className={classes.menu} onClick={handleClose}> */}
                     {this.props.user.id && (
                       <div>
@@ -69,24 +70,24 @@ class Nav extends Component {
                             </Link>
                             <Link className={classes.menu} to="/admin/accounts">
                               <MenuItem className={classes.menu} onClick={handleClose}>
-                              Manage Accounts
+                                Manage Accounts
                               </MenuItem>
-                          </Link>
+                            </Link>
                           </div>
                         )}
                         {this.props.user.role_id === 1 && (
                           <Link className={classes.menu} to="/settings">
                             <MenuItem onClick={handleClose}>
-                            Account Settings
+                              Account Settings
                             </MenuItem>
-                        </Link>
+                          </Link>
                         )}
                       </div>
                     )}
                     {/* </MenuItem> */}
                     <Link className={classes.menu} to="/about">
                       <MenuItem className={classes.menu} onClick={handleClose}>
-                      About
+                        About
                       </MenuItem>
                     </Link>
                   </Menu>
@@ -136,6 +137,7 @@ const styles = theme => ({
   },
   header: {
     textAlign: 'center',
+    // marginRight: '118px',
   },
   logIn: {
     backgroundColor: '#e1e3e7',
@@ -153,9 +155,28 @@ const styles = theme => ({
     textDecoration: 'none',
     margin: '0 auto',
     outline: 'none',
+    // backgroundColor: '#e1e3e7',
   },
   menuButton: {
     padding: '24px 10px',
+    cursor: 'pointer',
+    // margin: '10px',
+    float: 'right',
+  },
+  titleSecondary: {
+    color: '#e1e3e7',
+  },
+  navRight: {
+    float: 'right',
+    color: 'black',
+    backgroundColor: '#008183',
+    /* background-color: #777777; */
+    textAlign: 'center',
+    padding: '24px 10px',
+    textDecoration: 'none',
+    fontSize: '15px',
+    border: 'none',
+    outline: 'none',
     cursor: 'pointer',
   },
 });

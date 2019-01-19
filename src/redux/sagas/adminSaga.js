@@ -6,8 +6,8 @@ function* getEventAttendees(action) {
     try {
         console.log('eventId in adminSaga', action.payload);
         const eventAttendeesResponse = yield call(axios.get, `api/events/attendees/${action.payload}`)
-        yield put({type: 'SET_EVENT_ATTENDEES', payload: eventAttendeesResponse.data});
-    } catch(err) {
+        yield put({ type: 'SET_EVENT_ATTENDEES', payload: eventAttendeesResponse.data });
+    } catch (err) {
         console.log(err)
     }
 }
@@ -15,8 +15,8 @@ function* getEventAttendees(action) {
 function* setAttendance(action) {
     try {
         yield call(axios.put, 'api/events/attendee', action.payload);
-        yield put({type: 'GET_EVENT_ATTENDEES', payload: action.refresh})
-    } catch(err) {
+        yield put({ type: 'GET_EVENT_ATTENDEES', payload: action.refresh })
+    } catch (err) {
         console.log(err);
     }
 }
@@ -29,9 +29,9 @@ function* addEvent(action) {
             text: "This event has been added to the event list!",
             icon: "success",
             button: "Ok",
-          });
-        
-    } catch(err) {
+        });
+
+    } catch (err) {
         console.log(err);
     }
 }
@@ -39,8 +39,8 @@ function* addEvent(action) {
 function* getAllUsers() {
     try {
         const userListResponse = yield call(axios.get, 'api/user/userList');
-        yield put({type: 'SET_ALL_USERS', payload: userListResponse.data});
-    } catch(err) {
+        yield put({ type: 'SET_ALL_USERS', payload: userListResponse.data });
+    } catch (err) {
         console.log(err);
     }
 }
@@ -48,8 +48,8 @@ function* getAllUsers() {
 function* changeUserRole(action) {
     try {
         yield call(axios.put, `api/user/changeRole`, action.payload);
-        yield put({type: 'GET_ALL_USERS'});
-    } catch(err) {
+        yield put({ type: 'GET_ALL_USERS' });
+    } catch (err) {
         console.log(err);
     }
 }
@@ -57,20 +57,29 @@ function* changeUserRole(action) {
 function* deleteUser(action) {
     try {
         yield call(axios.delete, `api/user/delete/${action.payload}`);
-        yield put({type: 'GET_ALL_USERS'});
-    } catch(err) {
+        yield put({ type: 'GET_ALL_USERS' });
+    } catch (err) {
         console.log(err);
     }
 }
 
-function* getUserEventListAdmin(){
+function* getUserEventListAdmin() {
     try {
-      const userEventListResponse = yield call(axios.get, 'api/events/getUserEventsAdmin');
-      yield put({type: 'SET_USER_EVENT_LIST', payload: userEventListResponse.data});
-    } catch(err) {
-      console.log('error in getUserEventList saga:', err);
+        const userEventListResponse = yield call(axios.get, 'api/events/getUserEventsAdmin');
+        yield put({ type: 'SET_USER_EVENT_LIST', payload: userEventListResponse.data });
+    } catch (err) {
+        console.log('error in getUserEventList saga:', err);
     }
-  }
+}
+
+function* deleteEvent(action) {
+    try {
+        yield call(axios.delete, `api/events/deleteEvent/${action.payload}`);
+        yield put({type: 'GET_USER_EVENT_LIST_ADMIN'});
+    } catch (err) {
+        console.log(err);
+    }
+}
 
 function* adminSaga() {
     yield takeEvery('GET_EVENT_ATTENDEES', getEventAttendees);
@@ -79,7 +88,8 @@ function* adminSaga() {
     yield takeEvery('GET_ALL_USERS', getAllUsers);
     yield takeEvery('CHANGE_USER_ROLE', changeUserRole);
     yield takeEvery('DELETE_USER', deleteUser);
-    yield takeEvery('GET_USER_EVENT_LIST_ADMIN', getUserEventListAdmin)
+    yield takeEvery('GET_USER_EVENT_LIST_ADMIN', getUserEventListAdmin);
+    yield takeEvery('DELETE_EVENT', deleteEvent);
 }
 
 export default adminSaga;

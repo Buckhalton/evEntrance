@@ -3,6 +3,17 @@ const pool = require('../modules/pool');
 const { rejectUnauthenticated } = require('../modules/authentication-middleware');
 const router = express.Router();
 
+const rejectNonAdmin = (req, res, next) => {
+    // check if logged in
+    if (req.user.role_id === 2) {
+      // They were authenticated! Admin may do the next thing
+      // Note! They may not be Authorized to do all things
+      next();
+    } else {
+      // failure best handled on the server. do redirect here.
+      res.sendStatus(403);
+    }
+  };
 
 router.get('/getUserEvents', rejectUnauthenticated, (req, res) => {
     pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events WHERE "event_date" >= (now() - INTERVAL '1 day') ORDER BY "events"."event_date" ASC;`)
@@ -15,8 +26,8 @@ router.get('/getUserEvents', rejectUnauthenticated, (req, res) => {
     })
 });
 
-router.get('/getUserEventsAdmin', rejectUnauthenticated, (req, res) => {
-    pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events;`)
+router.get('/getUserEventsAdmin', rejectNonAdmin, (req, res) => {
+    pool.query(`SELECT to_char(event_date, 'MM-DD-YYYY') as event_date, event_name, id FROM events ORDER BY "events"."event_date" DESC;`)
     .then(response => {
         res.send(response.rows)
     })
@@ -118,6 +129,18 @@ router.put('/attendee', rejectUnauthenticated, (req, res) => {
 router.post('/add', rejectUnauthenticated, (req, res) => {
     let event = req.body;
     pool.query('INSERT INTO events (event_name, event_date) VALUES ($1, $2);', [event.event, event.date])
+    .then(response => {
+        res.sendStatus(201);
+    })
+    .catch(err => {
+        res.sendStatus(500);
+        console.log(err);
+    })
+})
+
+router.delete('/deleteEvent/:id', rejectNonAdmin, (req, res) => {
+    let id = req.params.id;
+    pool.query(`DELETE FROM events WHERE id = $1`, [id])
     .then(response => {
         res.sendStatus(201);
     })

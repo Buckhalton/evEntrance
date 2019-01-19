@@ -8,7 +8,7 @@ import './Footer.css'
 
 const Footer = () => (
   <footer>
-    <p>&copy; Isaiah Buckhalton</p>
+    <p>Isaiah Buckhalton &copy; 2019</p>
   </footer>
 );
 

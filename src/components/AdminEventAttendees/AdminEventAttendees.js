@@ -22,8 +22,8 @@ class AdminEventAttendees extends Component {
     }
 
     getStripedStyle(i) {
-        return { backgroundColor: i % 2 ? '#e1e3e7': '#f3f6fc' };
-      }
+        return { backgroundColor: i % 2 ? '#e1e3e7' : '#f3f6fc' };
+    }
 
     render() {
         const { classes } = this.props;
@@ -52,63 +52,66 @@ class AdminEventAttendees extends Component {
         })
         let eventTitle;
         let eventDate;
-        if(this.props.attendeesList[0] && this.props.attendeesList[0].event_date){
+        if (this.props.attendeesList[0] && this.props.attendeesList[0].event_date) {
             eventTitle = this.props.attendeesList[0].event_name;
             eventDate = this.props.attendeesList[0].event_date;
         }
         return (
-            <Paper className={classes.paper}>
-                <h3>Event Attendees: {eventTitle} - {eventDate}</h3>
+            <div>
                 <Link to="/admin/events"
-                        style={{
-                            display: 'block',
-                            height: '100%',
-                            textDecoration: 'none',
-                            color: 'white'
-                        }}>
+                    style={{
+                        display: 'block',
+                        height: '100%',
+                        textDecoration: 'none',
+                        color: 'white',
+                        margin: '10px',
+                    }}>
                     <Button variant="contained" color="primary">
                         Go Back
                     </Button>
                 </Link>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <TableCell className={classes.tableHeader}>Name</TableCell>
-                            <TableCell className={classes.tableHeader}>Email</TableCell>
-                            <TableCell className={classes.tableHeader}>Phone Number</TableCell>
-                            <TableCell className={classes.tableHeader}>Address</TableCell>
-                            <TableCell className={classes.tableHeader}>Username</TableCell>
-                            <TableCell className={classes.tableHeader}>Attended</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {tableContentOne}
-                    </TableBody>
-                </Table>
-            </Paper>
+                <Paper className={classes.paper}>
+                    <h3>Event Attendees: {eventTitle} - {eventDate}</h3>
+                    <Table>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell className={classes.tableHeader}>Name</TableCell>
+                                <TableCell className={classes.tableHeader}>Email</TableCell>
+                                <TableCell className={classes.tableHeader}>Phone Number</TableCell>
+                                <TableCell className={classes.tableHeader}>Address</TableCell>
+                                <TableCell className={classes.tableHeader}>Username</TableCell>
+                                <TableCell className={classes.tableHeader}>Attended</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {tableContentOne}
+                        </TableBody>
+                    </Table>
+                </Paper>
+            </div>
         )
     }
 }
 
 const styles = theme => ({
     inputStyles: {
-      marginRight: '20px',
-      backgroundColor: '#edf0f5',
+        marginRight: '20px',
+        backgroundColor: '#edf0f5',
     },
     buttonStyles: {
-      margin: '5px',
+        margin: '5px',
     },
     table: {
         fontSize: '16px',
-      },
+    },
     tableHeader: {
         fontSize: '32px',
-      },
+    },
     tableBody: {
-      maxHeight: '500px',
-      overflow: 'auto',
-      display: 'block',
-      wordWrap: 'break-word',
+        maxHeight: '500px',
+        overflow: 'auto',
+        display: 'block',
+        wordWrap: 'break-word',
     },
     paper: {
         width: '85%',
@@ -122,22 +125,22 @@ const styles = theme => ({
         backgroundColor: '#e1e3e7',
         fontSize: '28px',
         boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-    
-      },
+
+    },
     header: {
-      textAlign: 'center',
+        textAlign: 'center',
     },
     logIn: {
-      backgroundColor: '#e1e3e7',
-      position: 'relative',
-      borderRadius: '20px',
-      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+        backgroundColor: '#e1e3e7',
+        position: 'relative',
+        borderRadius: '20px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
     },
     center: {
-      margin: '0 auto',
-      textAlign: 'center',
+        margin: '0 auto',
+        textAlign: 'center',
     }
-  });
+});
 
 const mapStateToProps = state => ({
     attendeesList: state.admin,

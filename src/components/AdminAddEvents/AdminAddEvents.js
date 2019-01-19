@@ -5,7 +5,20 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 
+let today = new Date();
+let dd = today.getDate();
+let mm = today.getMonth() + 1; //January is 0!
+let yyyy = today.getFullYear();
 
+if (dd < 10) {
+  dd = '0' + dd;
+}
+
+if (mm < 10) {
+  mm = '0' + mm;
+}
+
+today = mm + '/' + dd + '/' + yyyy;
 
 class AdminAddEvents extends Component {
     state = {
@@ -27,6 +40,7 @@ class AdminAddEvents extends Component {
     }
 
     render() {
+        console.log(today);
         const { classes } = this.props;
         return (
             <Paper className={classes.paper}>
@@ -43,7 +57,6 @@ class AdminAddEvents extends Component {
                         className={classes.inputStyles}
                     />
                     <TextField
-                        label=""
                         placeholder="Event Date"
                         type="date"
                         margin="normal"
@@ -77,6 +90,8 @@ const styles = theme => ({
     inputStyles: {
       marginRight: '20px',
       backgroundColor: 'inherit',
+      width: '65%',
+
     },
     buttonStyles: {
       margin: '5px',
@@ -94,7 +109,7 @@ const styles = theme => ({
       wordWrap: 'break-word',
     },
     paper: {
-        width: '85%',
+        width: '65%',
         height: '30%',
         padding: '25px',
         marginTop: theme.spacing.unit * 3,
@@ -105,6 +120,7 @@ const styles = theme => ({
         backgroundColor: '#e1e3e7',
         fontSize: '28px',
         boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+        textAlign: 'center',
     
       },
     header: {
