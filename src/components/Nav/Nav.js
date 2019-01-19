@@ -19,7 +19,7 @@ class Nav extends Component {
     return (
       <div className="nav">
         <Link to="/home">
-          <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span></h2>
+          <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span><img src="/evEntrance.png"/></h2>
         </Link>
         <div className="nav-right">
           {this.props.user.id && (
