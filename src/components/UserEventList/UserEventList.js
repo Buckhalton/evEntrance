@@ -93,7 +93,7 @@ class UserEventList extends Component {
 
     return (
       <div>
-        <Paper className={classes.paper}>
+        <Paper className={classes.paperOne}>
           <h3>Your Upcoming Events:</h3>
           <Table>
             <TableHead>
@@ -158,7 +158,21 @@ const styles = theme => ({
       margin: '0 auto',
       borderRadius: '20px',
       backgroundColor: '#e1e3e7',
-      marginBottom: '10%',
+      // marginBottom: '10%',
+      fontSize: '28px',
+      boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+  
+    },
+    paperOne: {
+      width: '85%',
+      height: '30%',
+      padding: '25px',
+      marginTop: theme.spacing.unit * 3,
+      overflow: 'auto',
+      margin: '0 auto',
+      borderRadius: '20px',
+      backgroundColor: '#e1e3e7',
+      marginBottom: '2%',
       fontSize: '28px',
       boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
   

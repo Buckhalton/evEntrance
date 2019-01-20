@@ -35,7 +35,7 @@ const styles = {
         padding: '25px',
         overflow: 'auto',
         margin: '0 auto',
-        marginBottom: '10%',
+        // marginBottom: '10%',
         borderRadius: '20px',
         backgroundColor: '#e1e3e7',
         fontSize: '28px',
@@ -51,7 +51,7 @@ const styles = {
       position: 'relative',
       borderRadius: '20px',
       boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-  }
+  },
 }
 
 export default (AboutPage);

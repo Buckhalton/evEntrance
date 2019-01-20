@@ -5,20 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import { connect } from 'react-redux';
 import { withStyles } from '@material-ui/core';
 
-let today = new Date();
-let dd = today.getDate();
-let mm = today.getMonth() + 1; //January is 0!
-let yyyy = today.getFullYear();
-
-if (dd < 10) {
-  dd = '0' + dd;
-}
-
-if (mm < 10) {
-  mm = '0' + mm;
-}
-
-today = mm + '/' + dd + '/' + yyyy;
 
 class AdminAddEvents extends Component {
     state = {
@@ -37,10 +23,10 @@ class AdminAddEvents extends Component {
         if (this.state.eventName && this.state.eventDate) {
             this.props.dispatch({ type: 'ADD_EVENT', payload: { event: this.state.eventName, date: this.state.eventDate } });
         }
+        this.props.history.push('/home');
     }
 
     render() {
-        console.log(today);
         const { classes } = this.props;
         return (
             <Paper className={classes.paper}>
@@ -76,7 +62,7 @@ class AdminAddEvents extends Component {
                     </Button>
                     <Button variant="contained" 
                         className={classes.buttonStyles}
-                        onClick={() => this.props.history.push('/admin/events')}
+                        onClick={() => this.props.history.push('/admin')}
                         color="primary">
                         Go Back
                     </Button>
@@ -115,7 +101,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
         overflow: 'auto',
         margin: '0 auto',
-        marginBottom: '10%',
+        // marginBottom: '10%',
         borderRadius: '20px',
         backgroundColor: '#e1e3e7',
         fontSize: '28px',

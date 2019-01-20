@@ -71,7 +71,7 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
         overflow: 'auto',
         margin: '0 auto',
-        marginBottom: '20%',
+        // marginBottom: '20%',
         borderRadius: '20px',
         backgroundColor: '#e1e3e7',
         fontSize: '28px',

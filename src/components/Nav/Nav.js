@@ -19,7 +19,7 @@ class Nav extends Component {
     return (
       <div className="nav">
         <Link to="/home">
-          <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span><img src="/evEntrance.png"/></h2>
+          <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span><img alt="logo" src="/evEntrance.png" className={classes.img}/></h2>
         </Link>
         <div className="nav-right">
           {this.props.user.id && (
@@ -178,6 +178,10 @@ const styles = theme => ({
     border: 'none',
     outline: 'none',
     cursor: 'pointer',
+  },
+  img: {
+    height: '48px',
+    width: '48px',
   },
 });
 

@@ -136,21 +136,22 @@ const styles = theme => ({
     backgroundColor: '#e1e3e7',
     padding: '5%',
     boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-
   },
   header: {
     textAlign: 'center',
   },
   logIn: {
     backgroundColor: '#e1e3e7',
-    position: 'relative',
+    // position: 'relative',
     borderRadius: '20px',
     boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
   },
   center: {
     margin: '0 auto',
     textAlign: 'center',
-  }
+    // paddingBottom: '13.75%',
+  },
+
 });
 
 // Instead of taking everything from state, we just want the error messages.

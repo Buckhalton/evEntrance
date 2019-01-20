@@ -16,7 +16,6 @@ import ProtectedAdminRoute from '../ProtectedAdminRoute/ProtectedAdminRoute';
 
 import AboutPage from '../AboutPage/AboutPage';
 import UserPage from '../UserPage/UserPage';
-import InfoPage from '../InfoPage/InfoPage';
 import UserSettings from '../UserSettings/UserSettings';
 import UpdateAccount from '../UpdateAccount/UpdateAccount';
 import AdminMain from '../AdminMain/AdminMain';
@@ -83,11 +82,6 @@ class App extends Component {
             />
             {/* This works the same as the other protected route, except that if the user is logged in,
             they will see the info page instead. */}
-            <ProtectedRoute
-              exact
-              path="/info"
-              component={InfoPage}
-            />
 
             <ProtectedRoute
               exact
