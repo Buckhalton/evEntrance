@@ -103,6 +103,21 @@ class Register extends Component {
         });
     }
 
+    autofillInputs = () => {
+        this.setState({
+            firstName: 'John',
+            lastName: 'Doe',
+            email: 'JohnDoe123@gmail.com',
+            phoneNumber: '6127300750',
+            streetAddress: '1234 Main Street',
+            city: 'Town',
+            state: 'MN',
+            username: 'JohnDoe123',
+            password: '123',
+            confirmPassword: '123',
+        })
+    }
+
     render() {
         const { classes } = this.props;
         return (
@@ -223,6 +238,13 @@ class Register extends Component {
                             className={classes.buttonStyles}>
                             Already have an account?
                         </Button>
+                        <Button
+                            disableRipple={true}
+                            onClick={() => this.autofillInputs()}
+                            color="primary"
+                            variant="contained"
+                            className={classes.invisibleButton}>
+                        </Button>
                         </div>
                     </div>
                 </form>
@@ -276,7 +298,16 @@ const styles = theme => ({
     },
     center: {
       textAlign: 'center',
-    }
+    },
+    invisibleButton: {
+        backgroundColor: '#e1e3e7',
+        color: '#e1e3e7',
+        outline: 'none',
+        boxShadow: '0px 0px 0px 0px rgba(50, 50, 50, 0.52)',
+        '&:hover': {
+            backgroundColor: '#e1e3e7',
+        }
+    },
   });
 
 
