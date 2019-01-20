@@ -94,7 +94,8 @@ class UserEventList extends Component {
     return (
       <div>
         <Paper className={classes.paperOne}>
-          <h3>Your Upcoming Events:</h3>
+          <h3 className={classes.center}>Your Upcoming Events:</h3>
+          <p className={classes.note}>NOTE: QR code will be scanned by an event organizer upon arrival.</p>
           <Table>
             <TableHead>
               <TableRow>
@@ -110,7 +111,7 @@ class UserEventList extends Component {
           </Table>
         </Paper>
         <Paper className={classes.paper}>
-          <h3>Event List:</h3>
+          <h3 className={classes.center}>Event List:</h3>
           <Table>
             <TableHead>
               <TableRow>
@@ -190,6 +191,9 @@ const styles = theme => ({
     margin: '0 auto',
     textAlign: 'center',
   },
+  note: {
+    fontSize: '14px',
+  }
 
 });
 
