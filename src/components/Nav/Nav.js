@@ -18,180 +18,190 @@ class Nav extends Component {
     const { classes } = this.props;
     return (
       <div className="nav">
-        <Link to="/home">
-          <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span><img alt="logo" src="/evEntrance.png" className={classes.img}/></h2>
-        </Link>
-        <div className="nav-right">
+        {this.props.user.id && (
+            <p className={classes.currentUser}>Logged in as: {this.props.user.username}</p>
+        )}
+            <Link to="/home">
+              <h2 className="nav-title">ev<span className={classes.titleSecondary}>Entrance</span><img alt="logo" src="/evEntrance.png" className={classes.img} /></h2>
+            </Link>
+          <div className="nav-right">
           {this.props.user.id && (
-            <Link to="/home"><LogOutButton className={classes.navRight}></LogOutButton></Link>
+                <Link to="/home"><LogOutButton className={classes.navRight}></LogOutButton></Link>
           )}
-          <WithState>
-            {({ anchorEl, updateAnchorEl }) => {
-              const open = Boolean(anchorEl);
-              const handleClose = () => {
-                updateAnchorEl(null);
-              };
-              const { classes } = this.props;
-              return (
-                <React.Fragment className={classes.menu}>
-                  <MenuIcon
-                    aria-owns={open ? 'render-props-menu' : undefined}
-                    aria-haspopup="true"
-                    className={classes.menuButton}
-                    onClick={event => {
-                      updateAnchorEl(event.currentTarget);
-                    }}
-                  >
+            <WithState>
+              {({ anchorEl, updateAnchorEl }) => {
+                const open = Boolean(anchorEl);
+                const handleClose = () => {
+                  updateAnchorEl(null);
+                };
+                const { classes } = this.props;
+                return (
+                  <React.Fragment className={classes.menu}>
+                    <MenuIcon
+                      aria-owns={open ? 'render-props-menu' : undefined}
+                      aria-haspopup="true"
+                      className={classes.menuButton}
+                      onClick={event => {
+                        updateAnchorEl(event.currentTarget);
+                      }}
+                    >
 
-                  </MenuIcon>
-                  <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
-                    <Link className={classes.menu} to="/home">
-                      <MenuItem className={classes.menu} onClick={handleClose}>
-                        {/* Show this link if they are logged in or not,
+                    </MenuIcon>
+                    <Menu id="render-props-menu" anchorEl={anchorEl} open={open} onClose={handleClose}>
+                      <Link className={classes.menu} to="/home">
+                        <MenuItem className={classes.menu} onClick={handleClose}>
+                          {/* Show this link if they are logged in or not,
                       but call this link 'Home' if they are logged in,
                       and call this link 'Login / Register' if they are not */}
-                        {this.props.user.id ? 'Home' : 'Login / Register'}
-                      </MenuItem>
-                    </Link>
-                    {/* <MenuItem className={classes.menu} onClick={handleClose}> */}
-                    {this.props.user.id && (
-                      <div>
-                        {this.props.user.role_id === 2 && (
-                          <div>
-                            <Link className={classes.menu} to="/admin/events">
-                              <MenuItem className={classes.menu} onClick={handleClose}>
-                                Event List
+                          {this.props.user.id ? 'Home' : 'Login / Register'}
+                        </MenuItem>
+                      </Link>
+                      {/* <MenuItem className={classes.menu} onClick={handleClose}> */}
+                      {this.props.user.id && (
+                        <div>
+                          {this.props.user.role_id === 2 && (
+                            <div>
+                              <Link className={classes.menu} to="/admin/events">
+                                <MenuItem className={classes.menu} onClick={handleClose}>
+                                  Event List
                               </MenuItem>
-                            </Link>
-                            <Link className={classes.menu} to="/admin/events/add">
-                              <MenuItem className={classes.menu} onClick={handleClose}>
-                                Add Events
+                              </Link>
+                              <Link className={classes.menu} to="/admin/events/add">
+                                <MenuItem className={classes.menu} onClick={handleClose}>
+                                  Add Events
                               </MenuItem>
-                            </Link>
-                            <Link className={classes.menu} to="/admin/accounts">
-                              <MenuItem className={classes.menu} onClick={handleClose}>
-                                Manage Accounts
+                              </Link>
+                              <Link className={classes.menu} to="/admin/accounts">
+                                <MenuItem className={classes.menu} onClick={handleClose}>
+                                  Manage Accounts
                               </MenuItem>
-                            </Link>
-                          </div>
-                        )}
-                        {this.props.user.role_id === 1 && (
-                          <Link className={classes.menu} to="/settings">
-                            <MenuItem onClick={handleClose}>
-                              Account Settings
+                              </Link>
+                            </div>
+                          )}
+                          {this.props.user.role_id === 1 && (
+                            <Link className={classes.menu} to="/settings">
+                              <MenuItem onClick={handleClose}>
+                                Account Settings
                             </MenuItem>
-                          </Link>
-                        )}
-                      </div>
-                    )}
-                    {/* </MenuItem> */}
-                    <Link className={classes.menu} to="/about">
-                      <MenuItem className={classes.menu} onClick={handleClose}>
-                        About
+                            </Link>
+                          )}
+                        </div>
+                      )}
+                      {/* </MenuItem> */}
+                      <Link className={classes.menu} to="/about">
+                        <MenuItem className={classes.menu} onClick={handleClose}>
+                          About
                       </MenuItem>
-                    </Link>
-                  </Menu>
-                </React.Fragment>
-              );
-            }}
-          </WithState>
-        </div>
+                      </Link>
+                    </Menu>
+                  </React.Fragment>
+                );
+              }}
+            </WithState>
+          </div>
       </div>
-    )
+      )
+    }
   }
-}
-
-
+  
+  
 const styles = theme => ({
   inputStyles: {
-    marginRight: '20px',
-    backgroundColor: '#edf0f5',
-  },
+        marginRight: '20px',
+        backgroundColor: '#edf0f5',
+      },
   buttonStyles: {
-    margin: '5px',
-  },
+        margin: '5px',
+      },
   table: {
-    display: 'block',
-    tableLayout: 'wrap',
-    width: '100px',
-  },
+        display: 'block',
+        tableLayout: 'wrap',
+        width: '100px',
+      },
   tableRow: {
-    display: 'flex',
-  },
+        display: 'flex',
+      },
   tableBody: {
-    maxHeight: '500px',
-    overflow: 'auto',
-    display: 'block',
-    wordWrap: 'break-word',
-  },
+        maxHeight: '500px',
+        overflow: 'auto',
+        display: 'block',
+        wordWrap: 'break-word',
+      },
   paper: {
-    width: '100%',
-    height: '30%',
-    marginTop: theme.spacing.unit * 3,
-    overflow: 'auto',
-    margin: '0 auto',
-    backgroundColor: '#e1e3e7',
-    padding: '5%',
-    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-
-  },
+        width: '100%',
+        height: '30%',
+        marginTop: theme.spacing.unit * 3,
+        overflow: 'auto',
+        margin: '0 auto',
+        backgroundColor: '#e1e3e7',
+        padding: '5%',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+    
+      },
   header: {
-    textAlign: 'center',
-    // marginRight: '118px',
-  },
+        textAlign: 'center',
+        // marginRight: '118px',
+      },
   logIn: {
-    backgroundColor: '#e1e3e7',
-    position: 'relative',
-    borderRadius: '20px',
-    boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
-  },
+        backgroundColor: '#e1e3e7',
+        position: 'relative',
+        borderRadius: '20px',
+        boxShadow: '0px 10px 20px 0px rgba(50, 50, 50, 0.52)',
+      },
   center: {
-    margin: '0 auto',
-    textAlign: 'center',
-  },
+        margin: '0 auto',
+        textAlign: 'center',
+      },
   menu: {
-    display: 'block',
-    textAlign: 'center',
-    textDecoration: 'none',
-    margin: '0 auto',
-    outline: 'none',
-    // backgroundColor: '#e1e3e7',
-  },
+        display: 'block',
+        textAlign: 'center',
+        textDecoration: 'none',
+        margin: '0 auto',
+        outline: 'none',
+        // backgroundColor: '#e1e3e7',
+      },
   menuButton: {
-    padding: '24px 10px',
-    cursor: 'pointer',
-    // margin: '10px',
-    float: 'right',
-  },
+        padding: '24px 10px',
+        cursor: 'pointer',
+        // margin: '10px',
+        float: 'right',
+        height: '40px',
+        width: '40px',
+      },
   titleSecondary: {
-    color: '#e1e3e7',
-  },
+        color: '#e1e3e7',
+      },
   navRight: {
-    float: 'right',
-    color: 'black',
-    backgroundColor: '#008183',
-    /* background-color: #777777; */
-    textAlign: 'center',
-    padding: '24px 10px',
-    textDecoration: 'none',
-    fontSize: '15px',
-    border: 'none',
-    outline: 'none',
-    cursor: 'pointer',
-  },
+        float: 'right',
+        color: 'black',
+        backgroundColor: '#008183',
+        /* background-color: #777777; */
+        textAlign: 'center',
+        padding: '24px 10px',
+        textDecoration: 'none',
+        fontSize: '15px',
+        border: 'none',
+        outline: 'none',
+        cursor: 'pointer',
+      },
   img: {
-    height: '48px',
-    width: '48px',
-  },
-});
-
-// Instead of taking everything from state, we just want the user
-// object to determine if they are logged in
-// if they are logged in, we show them a few more links
-// if you wanted you could write this code like this:
+        height: '48px',
+        width: '48px',
+      },
+  currentUser: {
+          fontSize: '16px',
+          float: 'left',
+          paddingLeft: '5px',
+      }
+    });
+    
+    // Instead of taking everything from state, we just want the user
+    // object to determine if they are logged in
+    // if they are logged in, we show them a few more links
+    // if you wanted you could write this code like this:
 // const mapStateToProps = ({user}) => ({user});
 const mapStateToProps = state => ({
-  user: state.user,
-});
-
-export default connect(mapStateToProps)(withStyles(styles)(Nav));
+          user: state.user,
+      });
+      
+      export default connect(mapStateToProps)(withStyles(styles)(Nav));
