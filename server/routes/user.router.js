@@ -106,11 +106,12 @@ router.get('/attend/:id/:event', rejectNonAdmin, (req, res) => {
   let eventId = req.params.event;
   pool.query('UPDATE user_events SET attended = $1 FROM users WHERE users.id = user_events.users_id AND code = $2 AND user_events.events_id = $3;', [true, code, eventId])
   .then(response => {
-    res.sendStatus(201)
+    res.sendStatus(201);
+    console.log('User status changed to attended!');
   })
   .catch(err => {
     res.sendStatus(500);
-    console.log(err);
+    console.log('Request failed. You may not have permission to do this.');
   })
 })
 
