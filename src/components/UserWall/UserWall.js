@@ -12,7 +12,7 @@ class UserAttend extends Component {
     return (
       <div>
         <div>
-          <h1>You should not be here!</h1>
+          <h1>You do not have permission to view this page.</h1>
         </div>
       </div>
     )

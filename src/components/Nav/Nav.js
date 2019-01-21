@@ -36,7 +36,7 @@ class Nav extends Component {
                 };
                 const { classes } = this.props;
                 return (
-                  <React.Fragment className={classes.menu}>
+                  <React.Fragment>
                     <MenuIcon
                       aria-owns={open ? 'render-props-menu' : undefined}
                       aria-haspopup="true"

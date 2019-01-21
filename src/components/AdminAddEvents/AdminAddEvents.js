@@ -23,7 +23,9 @@ class AdminAddEvents extends Component {
         if (this.state.eventName && this.state.eventDate) {
             this.props.dispatch({ type: 'ADD_EVENT', payload: { event: this.state.eventName, date: this.state.eventDate } });
         }
-        this.props.history.push('/home');
+        setTimeout(() => {
+            this.props.history.push('/home');
+        }, 2000)
     }
 
     render() {

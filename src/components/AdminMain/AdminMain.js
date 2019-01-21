@@ -42,7 +42,7 @@ class AdminMain extends Component {
                                 <TableCell className={classes.tableHeader}>Event</TableCell>
                             </TableRow>
                         </TableHead>
-                        <TableBody stripedRows={777}>
+                        <TableBody>
                             {tableContentOne}
                         </TableBody>
                     </Table>
