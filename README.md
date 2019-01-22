@@ -10,7 +10,7 @@ React, React-Redux, Redux-Saga, JavaScript, Material-UI, postgreSQL, NodeJS, Exp
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-Clone/fork the repo, npm install, create the database using the queries provided in the databases.sql file, and then npm run client/npm start server.
+Clone/fork the repo, npm install, create the database using the queries provided in the databases.sql file, create a numverify account and get an api key, add the api key to your .env file, and then npm run client/npm start server.
 
 ### Prerequisites
 
