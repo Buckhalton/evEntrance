@@ -24,6 +24,7 @@ Create the database using the SQL queries provided in the database.sql file.
 
 ## Screen Shot
 ![User View](/public/User%20View.png?raw=true "User Main Page")
+
 ![Admin View](/public/Admin%20View.png?raw=true "Admin Main Page")
 ## Documentation
 
