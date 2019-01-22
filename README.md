@@ -23,8 +23,8 @@ npm install,
 Create the database using the SQL queries provided in the database.sql file.
 
 ## Screen Shot
-![User View](Screen Shot 2019-01-21 at 6.43.13 PM.png?raw=true "User Main Page")
-![Admin View](Screen Shot 2019-01-21 at 6.41.24 PM.png?raw=true "Admin Main Page")
+![User View](/Screen Shot 2019-01-21 at 6.43.13 PM.png?raw=true "User Main Page")
+![Admin View](/Screen Shot 2019-01-21 at 6.41.24 PM.png?raw=true "Admin Main Page")
 ## Documentation
 
 [Scope](https://docs.google.com/document/d/1papao5eiEuKCPGrj1fqtZ3hOTpFRl4RvxM3eNFDUrqc/edit?usp=sharing)
